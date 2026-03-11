@@ -61,7 +61,13 @@ Private Function 保存版KPNo読み込み() As Collection
         kpNoCol = CLng(pathInfo(idx, 1))
 
         If filePath = "" Then GoTo NextFile
-        If Dir(filePath) = "" Then
+        ' Dir()はドライブが存在しない場合にエラー52を発生させるためOn Error で保護する
+        Dim fileExists As Boolean
+        fileExists = False
+        On Error Resume Next
+        fileExists = (Dir(filePath) <> "")
+        On Error GoTo 0
+        If Not fileExists Then
             Call ログ書込("Step06", "警告", "保存版ファイルが見つかりません: " & filePath)
             GoTo NextFile
         End If
