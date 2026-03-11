@@ -25,6 +25,7 @@ Public g_ColModel               As Long    ' U列: MODEL
 Public g_ColKikiHinban          As Long    ' H列: 機械品番
 
 Public g_InquiryEmail           As String  ' 問い合わせ先メール
+Public g_DataStartRow           As Long    ' データ開始行番号（ヘッダー行の次の行）
 
 ' 基準日
 Public g_BaseDate               As Date    ' 実行時の基準日（当月1日）
@@ -42,11 +43,15 @@ Public Sub 設定読み込み()
 
     Set ws = ThisWorkbook.Sheets("設定")
     g_BaseDate = DateSerial(Year(Date), Month(Date), 1)
+    g_DataStartRow = 5  ' デフォルト値（設定シートで上書きされる）
 
     ' A列=キー, B列=値 の形式で2行目から読み込む
     For i = 2 To ws.UsedRange.Rows.Count + 1
         key = Trim(CStr(ws.Cells(i, 1).Value))
         val = Trim(CStr(ws.Cells(i, 2).Value))
+        ' パス値から前後の引用符を除去（誤って"付きで入力された場合の対策）
+        If Left(val, 1) = Chr(34) Then val = Mid(val, 2)
+        If Right(val, 1) = Chr(34) Then val = Left(val, Len(val) - 1)
         If key = "" Then Exit For
 
         Select Case key
@@ -70,6 +75,7 @@ Public Sub 設定読み込み()
             Case "列番号_属性(I列)":                     g_ColZokusei = CLng(val)
             Case "列番号_機械品番(H列)":                 g_ColKikiHinban = CLng(val)
             Case "問い合わせ先メール":                    g_InquiryEmail = val
+            Case "データ開始行番号":                      g_DataStartRow = CLng(val)
         End Select
     Next i
 

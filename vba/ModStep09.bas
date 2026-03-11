@@ -15,7 +15,7 @@ Public Sub Step09_数量チェック(ws As Worksheet)
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
 
     Dim i As Long
-    For i = 2 To lastRow
+    For i = g_DataStartRow To lastRow
         Dim model As String
         model = Trim(CStr(ws.Cells(i, g_ColModel).Value))
 
@@ -25,6 +25,7 @@ Public Sub Step09_数量チェック(ws As Worksheet)
         Dim shukkaDate As Variant
         shukkaDate = ws.Cells(i, g_ColShukkaDate).Value
         If IsEmpty(shukkaDate) Or CStr(shukkaDate) = "" Then GoTo NextRow
+        If Not IsDate(shukkaDate) Then GoTo NextRow
         If CDate(shukkaDate) > months3Later Then GoTo NextRow
 
         Dim suryo As Long

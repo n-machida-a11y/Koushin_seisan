@@ -30,7 +30,7 @@ Public Sub Step10_•À‚Ñ‘Ö‚¦(ws As Worksheet)
     lastCol = ws.UsedRange.Columns.Count
 
     Dim sortRange As Range
-    Set sortRange = ws.Range(ws.Cells(2, 1), ws.Cells(lastRow, lastCol))
+    Set sortRange = ws.Range(ws.Cells(g_DataStartRow, 1), ws.Cells(lastRow, lastCol))
 
     With ws.Sort
         .SortFields.Clear

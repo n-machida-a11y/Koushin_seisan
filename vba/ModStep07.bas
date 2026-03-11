@@ -26,7 +26,7 @@ Public Sub Step07_å^éÆï‚äÆ(ws As Worksheet)
     Dim months3Later As Date
     months3Later = DateSerial(Year(g_BaseDate), Month(g_BaseDate) + 3, Day(g_BaseDate))
 
-    For i = 2 To lastRow
+    For i = g_DataStartRow To lastRow
         Dim bhType As String
         bhType = Trim(CStr(ws.Cells(i, g_ColBHType).Value))
         If bhType <> "" Then GoTo NextRow  ' Ç∑Ç≈Ç…ì¸óÕçœÇ›ÇÕÉXÉLÉbÉv
@@ -39,7 +39,7 @@ Public Sub Step07_å^éÆï‚äÆ(ws As Worksheet)
         is3MonthsOrLess = False
         Dim shukkaDate As Variant
         shukkaDate = ws.Cells(i, g_ColShukkaDate).Value
-        If Not IsEmpty(shukkaDate) And CStr(shukkaDate) <> "" Then
+        If Not IsEmpty(shukkaDate) And CStr(shukkaDate) <> "" And IsDate(shukkaDate) Then
             is3MonthsOrLess = (CDate(shukkaDate) <= months3Later)
         End If
 
@@ -93,7 +93,7 @@ Private Function ãqêÊñºÇ©ÇÁBHTypeéÊìæ(ws As Worksheet, targetRow As Long, lastRo
     partialMatch = ""
 
     Dim i As Long
-    For i = 2 To lastRow
+    For i = g_DataStartRow To lastRow
         If i = targetRow Then GoTo NextRow
 
         Dim bhType As String

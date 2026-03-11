@@ -14,7 +14,7 @@ Public Sub Step05_計画生産対象削除(ws As Worksheet)
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
 
     ' 下から上に向かって削除（行削除時のインデックスズレを防ぐ）
-    For i = lastRow To 2 Step -1
+    For i = lastRow To g_DataStartRow Step -1
         cellVal = Trim(CStr(ws.Cells(i, g_ColTsuikashiyo).Value))
         If InStr(cellVal, "計画生産対象") > 0 Then
             ws.Rows(i).Delete

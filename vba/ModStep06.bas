@@ -20,10 +20,11 @@ Public Sub Step06_出荷済みデータ削除(ws As Worksheet)
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
 
     ' 下から上に向かって処理（行削除時のインデックスズレを防ぐ）
-    For i = lastRow To 2 Step -1
+    For i = lastRow To g_DataStartRow Step -1
         shukkaDate = ws.Cells(i, g_ColShukkaDate).Value
 
         If IsEmpty(shukkaDate) Or CStr(shukkaDate) = "" Then GoTo NextRow
+        If Not IsDate(shukkaDate) Then GoTo NextRow  ' ヘッダー行等の非日付値をスキップ
 
         ' 出荷日が当月より前のもの（過去分）のみチェック対象
         If CDate(shukkaDate) < g_BaseDate Then

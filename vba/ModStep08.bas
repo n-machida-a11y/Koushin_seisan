@@ -21,7 +21,7 @@ Public Sub Step08_Œv‰æ¶ŽYs“WŠJ(ws As Worksheet)
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
 
     Dim i As Long
-    For i = lastRow To 2 Step -1
+    For i = lastRow To g_DataStartRow Step -1
         Dim kishuName As String
         kishuName = Trim(CStr(ws.Cells(i, g_ColKishuName).Value))
         If InStr(kishuName, "Œv‰æ¶ŽY") = 0 Then GoTo NextRow
@@ -29,6 +29,7 @@ Public Sub Step08_Œv‰æ¶ŽYs“WŠJ(ws As Worksheet)
         Dim shukkaDate As Variant
         shukkaDate = ws.Cells(i, g_ColShukkaDate).Value
         If IsEmpty(shukkaDate) Or CStr(shukkaDate) = "" Then GoTo NextRow
+        If Not IsDate(shukkaDate) Then GoTo NextRow
         If CDate(shukkaDate) > months3Later Then GoTo NextRow
 
         Dim suryo As Long
