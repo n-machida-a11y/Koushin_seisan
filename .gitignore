@@ -1,1 +1,7 @@
 .worktrees/
+
+# Excelファイルはコードではないため除外
+*.xlsx
+*.xlsm
+*.xlsb
+*.xls

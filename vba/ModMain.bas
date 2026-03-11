@@ -84,7 +84,7 @@ Private Function 対象ファイルを開く() As Workbook
         Exit Function
     End If
 
-    Do While fileName <> """"
+    Do While fileName <> ""
         Dim fileDate As Date
         fileDate = FileDateTime(folderPath & fileName)
         If fileDate > latestDate Then
