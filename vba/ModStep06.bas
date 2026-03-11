@@ -54,19 +54,26 @@ Private Function 保存版KPNo読み込み() As Collection
     pathInfo(1, 1) = g_V9SavedKPNoCol
 
     Dim idx As Long
+    Dim filePath As String
+    Dim kpNoCol As Long
+    Dim fileExists As Boolean
+    Dim dirErrNum As Long
     For idx = 0 To 1
-        Dim filePath As String
-        Dim kpNoCol As Long
         filePath = CStr(pathInfo(idx, 0))
         kpNoCol = CLng(pathInfo(idx, 1))
 
         If filePath = "" Then GoTo NextFile
         ' Dir()はドライブが存在しない場合にエラー52を発生させるためOn Error で保護する
-        Dim fileExists As Boolean
+        ' Err.NumberはOn Error GoTo 0でクリアされるため、ブロック内で先に取得する
         fileExists = False
+        dirErrNum = 0
         On Error Resume Next
         fileExists = (Dir(filePath) <> "")
+        dirErrNum = Err.Number
         On Error GoTo 0
+        If dirErrNum <> 0 And dirErrNum <> 52 Then
+            Call ログ書込("Step06", "警告", "ファイル確認中にエラーが発生しました(Error " & dirErrNum & "): " & filePath)
+        End If
         If Not fileExists Then
             Call ログ書込("Step06", "警告", "保存版ファイルが見つかりません: " & filePath)
             GoTo NextFile

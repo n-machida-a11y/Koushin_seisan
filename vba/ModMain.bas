@@ -69,9 +69,22 @@ Private Function 対象ファイルを開く() As Workbook
     Dim fileName As String
     Dim latestFile As String
     Dim latestDate As Date
+    Dim dirErrNum As Long
+    dirErrNum = 0
+    On Error Resume Next
     fileName = Dir(folderPath & "*.xlsx")
+    dirErrNum = Err.Number
+    On Error GoTo 0
+    If dirErrNum <> 0 Then
+        MsgBox "フォルダへのアクセスに失敗しました(Error " & dirErrNum & ")。" & vbCrLf & _
+               "フォルダ: " & folderPath & vbCrLf & _
+               "設定シートの「BHプラン保存フォルダ」を確認してください。", _
+               vbCritical, "フォルダアクセスエラー"
+        Set 対象ファイルを開く = Nothing
+        Exit Function
+    End If
 
-    Do While fileName <> ""
+    Do While fileName <> """"
         Dim fileDate As Date
         fileDate = FileDateTime(folderPath & fileName)
         If fileDate > latestDate Then
