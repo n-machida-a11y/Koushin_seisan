@@ -27,7 +27,7 @@ Public Sub Step06_出荷済みデータ削除(ws As Worksheet)
 
         ' 出荷日が当月より前のもの（過去分）のみチェック対象
         If CDate(shukkaDate) < g_BaseDate Then
-            kpNo = Trim(CStr(ws.Cells(i, g_ColKPNo).Value))
+            kpNo = KPNoを正規化(ws.Cells(i, g_ColKPNo).Value)
             If kpNo <> "" Then
                 If KPNoExists(savedKPNos, kpNo) Then
                     ws.Rows(i).Delete
@@ -89,7 +89,7 @@ Private Function 保存版KPNo読み込み() As Collection
             Dim i As Long
             For i = 2 To lastRow
                 Dim kpNo As String
-                kpNo = Trim(CStr(ws.Cells(i, kpNoCol).Value))
+                kpNo = KPNoを正規化(ws.Cells(i, kpNoCol).Value)
                 If kpNo <> "" Then
                     On Error Resume Next
                     col.Add kpNo, kpNo
@@ -103,6 +103,22 @@ NextFile:
     Next idx
 
     Set 保存版KPNo読み込み = col
+End Function
+
+' ============================================================
+' KP-No値を型に関わらず統一した文字列に正規化する
+' 数値型（Double/Long等）は小数点・カンマなしの整数文字列に変換
+' 文字列型はTrimのみ
+' ============================================================
+Private Function KPNoを正規化(v As Variant) As String
+    If IsEmpty(v) Or IsNull(v) Then
+        KPNoを正規化 = ""
+    ElseIf IsNumeric(v) Then
+        ' 数値型: 整数部のみの文字列に変換（"12345.0" → "12345"）
+        KPNoを正規化 = CStr(CLng(v))
+    Else
+        KPNoを正規化 = Trim(CStr(v))
+    End If
 End Function
 
 ' ============================================================
