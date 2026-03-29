@@ -24,6 +24,19 @@ Public g_ColBHType              As Long    ' S列: BH型式TYPE
 Public g_ColModel               As Long    ' U列: MODEL
 Public g_ColKikiHinban          As Long    ' H列: 機械品番
 
+' Phase 1-B 追加列番号
+Public g_ColShipmentMonth       As Long    ' V列: shipment month
+Public g_ColTNo                 As Long    ' W列: T-No
+Public g_ColV8LAZType           As Long    ' Y列: V8-LAZ型式
+Public g_ColV8LAYType           As Long    ' Z列: V8-LAY型式
+Public g_ColZ002                As Long    ' AA列: Z002号機
+
+' Phase 1-B ファイルパス
+Public g_V8ProdSchedulePath     As String  ' V8 Production Scheduleパス
+Public g_V9ProdSchedulePath     As String  ' V9 Production Scheduleパス
+Public g_HoshitoriMasterPath    As String  ' 星取表計算マスターパス
+Public g_BHPlan0110Path         As String  ' 0110BHPlanパス
+
 Public g_InquiryEmail           As String  ' 問い合わせ先メール
 Public g_DataStartRow           As Long    ' データ開始行番号（ヘッダー行の次の行）
 
@@ -76,6 +89,16 @@ Public Sub 設定読み込み()
             Case "列番号_機械品番(H列)":                 g_ColKikiHinban = CLng(val)
             Case "問い合わせ先メール":                    g_InquiryEmail = val
             Case "データ開始行番号":                      g_DataStartRow = CLng(val)
+            ' Phase 1-B 追加設定
+            Case "列番号_shipment month(V列)":           g_ColShipmentMonth = CLng(val)
+            Case "列番号_T-No(W列)":                     g_ColTNo = CLng(val)
+            Case "列番号_V8-LAZ型式(Y列)":               g_ColV8LAZType = CLng(val)
+            Case "列番号_V8-LAY型式(Z列)":               g_ColV8LAYType = CLng(val)
+            Case "列番号_Z002号機(AA列)":                g_ColZ002 = CLng(val)
+            Case "V8_ProductionScheduleパス":            g_V8ProdSchedulePath = val
+            Case "V9_ProductionScheduleパス":            g_V9ProdSchedulePath = val
+            Case "星取表計算マスターパス":                g_HoshitoriMasterPath = val
+            Case "0110BHPlanパス":                       g_BHPlan0110Path = val
         End Select
     Next i
 
