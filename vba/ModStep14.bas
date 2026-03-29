@@ -109,23 +109,7 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
         currentDate = currentDate + 1
     Loop
     
-    ' B列で日付昇順ソート（データ行のみ）
-    If addedCount > 0 Then
-        Dim dataStartRow As Long
-        dataStartRow = 6  ' 出荷・完了計画のデータ開始行（ヘッダーの後）
-        lastRow = ws.Cells(ws.Rows.Count, 2).End(xlUp).Row
-        
-        Dim sortRange As Range
-        Set sortRange = ws.Range(ws.Cells(dataStartRow, 1), ws.Cells(lastRow, ws.UsedRange.Columns.Count))
-        
-        With ws.Sort
-            .SortFields.Clear
-            .SortFields.Add Key:=ws.Columns(2), Order:=xlAscending  ' B列で昇順
-            .SetRange sortRange
-            .Header = xlNo
-            .Apply
-        End With
-    End If
+    ' ※結合セルがあるためソートは行わない（日付は末尾に追加される）
     
     wb.Save
     wb.Close SaveChanges:=False
