@@ -31,6 +31,11 @@ Public Sub Step07_型式補完(ws As Worksheet)
         bhType = Trim(CStr(ws.Cells(i, g_ColBHType).Value))
         If bhType <> "" Then GoTo NextRow  ' すでに入力済みはスキップ
 
+        ' メンテ行はS列不要のためスキップ
+        Dim kishuName As String
+        kishuName = Trim(CStr(ws.Cells(i, g_ColKishuName).Value))
+        If InStr(kishuName, "メンテ") > 0 Then GoTo NextRow
+
         Dim katashiki As String
         katashiki = Trim(CStr(ws.Cells(i, g_ColKatashiki).Value))
 
