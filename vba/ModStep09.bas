@@ -2,12 +2,12 @@ Attribute VB_Name = "ModStep09"
 Option Explicit
 
 ' ============================================================
-' ï¿½Xï¿½eï¿½bï¿½vï¿½H: ï¿½ï¿½ï¿½Êƒ`ï¿½Fï¿½bï¿½Nï¿½iV8/V9 3ï¿½ï¿½ï¿½ï¿½ï¿½È“ï¿½ï¿½j
+' ƒXƒeƒbƒv‡H: ”—Êƒ`ƒFƒbƒNiV8/V9 3ƒ–ŒŽˆÈ“àj
 '
-' MODELï¿½iUï¿½ï¿½jï¿½ï¿½ï¿½uV8ï¿½vï¿½Ü‚ï¿½ï¿½ÍuV9ï¿½vï¿½iï¿½ï¿½ï¿½ï¿½ï¿½eï¿½ÈŠOï¿½jï¿½ï¿½
-' Nï¿½ï¿½iï¿½oï¿½×“ï¿½ï¿½jï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½È“ï¿½ï¿½Ìsï¿½Éï¿½ï¿½ï¿½1ï¿½ÈŠOï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Gï¿½ï¿½ï¿½[
+' MODELiU—ñj‚ªuV8v‚Ü‚½‚ÍuV9viƒƒ“ƒeˆÈŠOj‚Å
+' N—ñio‰×“új‚ª3ƒ–ŒŽˆÈ“à‚Ìs‚É”—Ê1ˆÈŠO‚ª‚ ‚ê‚Îˆ—’âŽ~ƒGƒ‰[
 ' ============================================================
-Public Sub Step09_ï¿½ï¿½ï¿½Êƒ`ï¿½Fï¿½bï¿½N(ws As Worksheet)
+Public Sub Step09_”—Êƒ`ƒFƒbƒN(ws As Worksheet)
     Dim months3Later As Date
     months3Later = DateSerial(Year(g_BaseDate), Month(g_BaseDate) + 3, Day(g_BaseDate))
 
@@ -19,7 +19,7 @@ Public Sub Step09_ï¿½ï¿½ï¿½Êƒ`ï¿½Fï¿½bï¿½N(ws As Worksheet)
         Dim model As String
         model = Trim(CStr(ws.Cells(i, g_ColModel).Value))
 
-        ' V8ï¿½Ü‚ï¿½ï¿½ï¿½V9ï¿½iï¿½ï¿½ï¿½ï¿½ï¿½eï¿½ï¿½ï¿½ï¿½ï¿½jï¿½Ì‚Ýƒ`ï¿½Fï¿½bï¿½N
+        ' V8‚Ü‚½‚ÍV9iƒƒ“ƒeœ‚­j‚Ì‚Ýƒ`ƒFƒbƒN
         If model <> "V8" And model <> "V9" Then GoTo NextRow
 
         Dim shukkaDate As Variant
@@ -34,13 +34,13 @@ Public Sub Step09_ï¿½ï¿½ï¿½Êƒ`ï¿½Fï¿½bï¿½N(ws As Worksheet)
         Dim suryo As Long
         suryo = CLng(rawSuryo)
         If suryo <> 1 Then
-            Call ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Gï¿½ï¿½ï¿½[(ws, i, _
-                "MODELï¿½u" & model & "ï¿½vï¿½Åï¿½ï¿½Ê‚ï¿½1ï¿½Å‚Í‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½ï¿½=" & suryo & "ï¿½jï¿½B" & vbCrLf & _
-                "ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½Ò‚Ö‚Ì–â‚¢ï¿½ï¿½ï¿½í‚¹ï¿½ï¿½ï¿½Kï¿½vï¿½Å‚ï¿½ï¿½B" & vbCrLf & _
-                "ï¿½ï¿½ï¿½Yï¿½vï¿½ï¿½No: " & ws.Cells(i, g_ColSeisanNo).Value)
+            Call ˆ—’âŽ~ƒGƒ‰[(ws, i, _
+                "MODELu" & model & "v‚Å”—Ê‚ª1‚Å‚Í‚ ‚è‚Ü‚¹‚ñi”—Ê=" & suryo & "jB" & vbCrLf & _
+                "ƒIƒ€ƒƒ“’S“–ŽÒ‚Ö‚Ì–â‚¢‡‚í‚¹‚ª•K—v‚Å‚·B" & vbCrLf & _
+                "¶ŽYŒv‰æNo: " & ws.Cells(i, g_ColSeisanNo).Value)
         End If
 NextRow:
     Next i
 
-    Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½("Step09_ï¿½ï¿½ï¿½Êƒ`ï¿½Fï¿½bï¿½N", "ï¿½ï¿½ï¿½ï¿½", "V8/V9ï¿½ï¿½3ï¿½ï¿½ï¿½ï¿½ï¿½È“ï¿½ï¿½ï¿½ï¿½Êƒ`ï¿½Fï¿½bï¿½Nï¿½ï¿½ï¿½ï¿½")
+    Call ƒƒO‘ž("Step09_”—Êƒ`ƒFƒbƒN", "¬Œ÷", "V8/V9‚Ì3ƒ–ŒŽˆÈ“à”—Êƒ`ƒFƒbƒNŠ®—¹")
 End Sub
