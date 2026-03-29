@@ -2,70 +2,97 @@ Attribute VB_Name = "ModMain"
 Option Explicit
 
 ' ============================================================
-' ƒƒCƒ“ŽÀs: Phase 1-AiƒXƒeƒbƒv‡D`‡Ij
-' uÝ’èvƒV[ƒg‚Ìƒ{ƒ^ƒ“‚©‚çŒÄ‚Ño‚·
+' ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½s: Phase 1-Aï¿½iï¿½Xï¿½eï¿½bï¿½vï¿½Dï¿½`ï¿½Iï¿½j
+' ï¿½uï¿½Ý’ï¿½vï¿½Vï¿½[ï¿½gï¿½Ìƒ{ï¿½^ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚Ñoï¿½ï¿½
 ' ============================================================
-Public Sub ƒƒCƒ“ŽÀs()
-    ' ŠJŽnŠm”Fƒ_ƒCƒAƒƒO
+Public Sub ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½s()
+    ' ï¿½Jï¿½nï¿½mï¿½Fï¿½_ï¿½Cï¿½Aï¿½ï¿½ï¿½O
     Dim ans As VbMsgBoxResult
-    ans = MsgBox("¶ŽYŒv‰æŽ©“®‰»iPhase 1-Aj‚ðŠJŽn‚µ‚Ü‚·B" & vbCrLf & vbCrLf & _
-                 "yŽ–‘OŠm”Fz" & vbCrLf & _
-                 "EBHƒvƒ‰ƒ“‚Ìo—Íƒtƒ@ƒCƒ‹ixlsxj‚ð inputƒtƒHƒ‹ƒ_‚É’u‚¢‚Ä‚­‚¾‚³‚¢" & vbCrLf & _
-                 "EÝ’èƒV[ƒg‚ÌƒtƒHƒ‹ƒ_ƒpƒX‚ª³‚µ‚¢‚±‚Æ‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢" & vbCrLf & vbCrLf & _
-                 "‘±s‚µ‚Ü‚·‚©H", vbYesNo + vbQuestion, "¶ŽYŒv‰æŽ©“®‰»")
+    ans = MsgBox("ï¿½ï¿½ï¿½Yï¿½vï¿½æŽ©ï¿½ï¿½ï¿½ï¿½ï¿½iPhase 1-Aï¿½jï¿½ï¿½ï¿½Jï¿½nï¿½ï¿½ï¿½Ü‚ï¿½ï¿½B" & vbCrLf & vbCrLf & _
+                 "ï¿½yï¿½ï¿½ï¿½Oï¿½mï¿½Fï¿½z" & vbCrLf & _
+                 "ï¿½EBHï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Ìoï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ixlsxï¿½jï¿½ï¿½ inputï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½É’uï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" & vbCrLf & _
+                 "ï¿½Eï¿½Ý’ï¿½Vï¿½[ï¿½gï¿½Ìƒtï¿½Hï¿½ï¿½ï¿½_ï¿½pï¿½Xï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ‚ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½" & vbCrLf & vbCrLf & _
+                 "ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½H", vbYesNo + vbQuestion, "ï¿½ï¿½ï¿½Yï¿½vï¿½æŽ©ï¿½ï¿½ï¿½ï¿½")
     If ans = vbNo Then Exit Sub
 
-    ' Ý’è“Ç‚Ýž‚Ý
-    Call Ý’è“Ç‚Ýž‚Ý()
+    ' ï¿½Ý’ï¿½Ç‚Ýï¿½ï¿½ï¿½
+    Call ï¿½Ý’ï¿½Ç‚Ýï¿½ï¿½ï¿½()
 
-    ' ‰ÁH‘ÎÛƒtƒ@ƒCƒ‹‚ðŠJ‚­
+    ' ï¿½ï¿½ï¿½Hï¿½ÎÛƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½
     Dim targetWb As Workbook
-    Set targetWb = ‘ÎÛƒtƒ@ƒCƒ‹‚ðŠJ‚­()
+    Set targetWb = ï¿½ÎÛƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½()
     If targetWb Is Nothing Then Exit Sub
 
-    ' ‘ÎÛƒV[ƒg‚ðŽæ“¾
+    ' ï¿½ÎÛƒVï¿½[ï¿½gï¿½ï¿½ï¿½æ“¾
     Dim targetWs As Worksheet
     On Error Resume Next
     Set targetWs = targetWb.Sheets(g_TargetSheetName)
     On Error GoTo 0
     If targetWs Is Nothing Then
-        MsgBox "ƒV[ƒgu" & g_TargetSheetName & "v‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB" & vbCrLf & _
-               "Ý’èƒV[ƒg‚Ìu‰ÁH‘ÎÛƒV[ƒg–¼v‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢B", _
-               vbCritical, "ƒV[ƒg‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñ"
+        MsgBox "ï¿½Vï¿½[ï¿½gï¿½u" & g_TargetSheetName & "ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B" & vbCrLf & _
+               "ï¿½Ý’ï¿½Vï¿½[ï¿½gï¿½Ìuï¿½ï¿½ï¿½Hï¿½ÎÛƒVï¿½[ï¿½gï¿½ï¿½ï¿½vï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B", _
+               vbCritical, "ï¿½Vï¿½[ï¿½gï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½"
         targetWb.Close SaveChanges:=False
         Exit Sub
     End If
 
-    ' ƒƒO‚ÉŠJŽn‚ð‹L˜^
-    Call ƒƒO‘ž("ƒƒCƒ“ŽÀs", "î•ñ", "ˆ—ŠJŽn: " & targetWb.Name)
+    ' ï¿½ï¿½ï¿½Oï¿½ÉŠJï¿½nï¿½ï¿½ï¿½Lï¿½^
+    Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½("ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½s", "ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½n: " & targetWb.Name)
 
-    ' ===== ƒXƒeƒbƒv‡D`‡I‚ð‡”Ô‚ÉŽÀs =====
-    Call Step05_Œv‰æ¶ŽY‘ÎÛíœ(targetWs)
-    Call Step06_o‰×Ï‚Ýƒf[ƒ^íœ(targetWs)
-    Call Step07_Œ^Ž®•âŠ®(targetWs)
-    Call Step08_Œv‰æ¶ŽYs“WŠJ(targetWs)
-    Call Step09_”—Êƒ`ƒFƒbƒN(targetWs)
-    Call Step10_•À‚Ñ‘Ö‚¦(targetWs)
+    ' ï¿½pï¿½tï¿½Hï¿½[ï¿½}ï¿½ï¿½ï¿½Xï¿½Å“Kï¿½ï¿½
+    Application.ScreenUpdating = False
+    Application.Calculation = xlCalculationManual
+    Application.EnableEvents = False
+
+    On Error GoTo ErrHandler
+
+    ' ===== ï¿½Xï¿½eï¿½bï¿½vï¿½Dï¿½`ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½Ô‚ÉŽï¿½ï¿½s =====
+    Call Step05_ï¿½vï¿½æ¶ï¿½Yï¿½ÎÛíœ(targetWs)
+    Call Step06_ï¿½oï¿½×Ï‚Ýƒfï¿½[ï¿½^ï¿½íœ(targetWs)
+    Call Step07_ï¿½^ï¿½ï¿½ï¿½âŠ®(targetWs)
+    Call Step08_ï¿½vï¿½æ¶ï¿½Yï¿½sï¿½Wï¿½J(targetWs)
+    Call Step09_ï¿½ï¿½ï¿½Êƒ`ï¿½Fï¿½bï¿½N(targetWs)
+    Call Step10_ï¿½ï¿½ï¿½Ñ‘Ö‚ï¿½(targetWs)
     ' =========================================
 
-    ' ã‘‚«•Û‘¶
+    On Error GoTo 0
+
+    ' Applicationï¿½ï¿½Ô‚Ì•ï¿½ï¿½ï¿½
+    Application.ScreenUpdating = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.EnableEvents = True
+
+    ' ï¿½ã‘ï¿½ï¿½ï¿½Û‘ï¿½
     targetWb.Save
 
-    Call ƒƒO‘ž("ƒƒCƒ“ŽÀs", "¬Œ÷", "Phase 1-A ˆ—Š®—¹: " & targetWb.Name)
-    MsgBox "ˆ—‚ªŠ®—¹‚µ‚Ü‚µ‚½B" & vbCrLf & _
-           "uƒƒOvƒV[ƒg‚Åˆ—Œ‹‰Ê‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢B", vbInformation, "Š®—¹"
+    Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½("ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½s", "ï¿½ï¿½ï¿½ï¿½", "Phase 1-A ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½: " & targetWb.Name)
+    MsgBox "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B" & vbCrLf & _
+           "ï¿½uï¿½ï¿½ï¿½Oï¿½vï¿½Vï¿½[ï¿½gï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê‚ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B", vbInformation, "ï¿½ï¿½ï¿½ï¿½"
+    Exit Sub
+
+ErrHandler:
+    ' Applicationï¿½ï¿½Ô‚Ì•ï¿½ï¿½ï¿½
+    Application.ScreenUpdating = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.EnableEvents = True
+
+    Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½("ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½s", "ï¿½Gï¿½ï¿½ï¿½[", "ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Gï¿½ï¿½ï¿½[: " & Err.Description)
+    MsgBox "ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½È‚ï¿½ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½ï¿½B" & vbCrLf & _
+           "ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Í•Û‘ï¿½ï¿½ï¿½ï¿½ï¿½Ä‚ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B" & vbCrLf & vbCrLf & _
+           "ï¿½Gï¿½ï¿½ï¿½[: " & Err.Description, vbCritical, "ï¿½Gï¿½ï¿½ï¿½["
+    targetWb.Close SaveChanges:=False
 End Sub
 
 ' ============================================================
-' inputƒtƒHƒ‹ƒ_“à‚Ì xlsx ƒtƒ@ƒCƒ‹‚ðŠJ‚¢‚Ä•Ô‚·
-' •¡”‚ ‚éê‡‚ÍÅŒã‚ÉXV‚³‚ê‚½‚à‚Ì‚ð‘I‚Ô
+' inputï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½ xlsx ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½Ä•Ô‚ï¿½
+' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê‡ï¿½ÍÅŒï¿½ÉXï¿½Vï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½Ì‚ï¿½Iï¿½ï¿½
 ' ============================================================
-Private Function ‘ÎÛƒtƒ@ƒCƒ‹‚ðŠJ‚­() As Workbook
+Private Function ï¿½ÎÛƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½() As Workbook
     Dim folderPath As String
     folderPath = g_BHPlanFolder
     If Right(folderPath, 1) <> "\" Then folderPath = folderPath & "\"
 
-    ' ƒtƒHƒ‹ƒ_“à‚Ìxlsx‚ðŒŸõ‚µ‚ÄÅVƒtƒ@ƒCƒ‹‚ðŽæ“¾
+    ' ï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½ï¿½xlsxï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÄÅVï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½æ“¾
     Dim fileName As String
     Dim latestFile As String
     Dim latestDate As Date
@@ -76,11 +103,11 @@ Private Function ‘ÎÛƒtƒ@ƒCƒ‹‚ðŠJ‚­() As Workbook
     dirErrNum = Err.Number
     On Error GoTo 0
     If dirErrNum <> 0 Then
-        MsgBox "ƒtƒHƒ‹ƒ_‚Ö‚ÌƒAƒNƒZƒX‚ÉŽ¸”s‚µ‚Ü‚µ‚½(Error " & dirErrNum & ")B" & vbCrLf & _
-               "ƒtƒHƒ‹ƒ_: " & folderPath & vbCrLf & _
-               "Ý’èƒV[ƒg‚ÌuBHƒvƒ‰ƒ“•Û‘¶ƒtƒHƒ‹ƒ_v‚ðŠm”F‚µ‚Ä‚­‚¾‚³‚¢B", _
-               vbCritical, "ƒtƒHƒ‹ƒ_ƒAƒNƒZƒXƒGƒ‰["
-        Set ‘ÎÛƒtƒ@ƒCƒ‹‚ðŠJ‚­ = Nothing
+        MsgBox "ï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½Ö‚ÌƒAï¿½Nï¿½Zï¿½Xï¿½ÉŽï¿½ï¿½sï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½(Error " & dirErrNum & ")ï¿½B" & vbCrLf & _
+               "ï¿½tï¿½Hï¿½ï¿½ï¿½_: " & folderPath & vbCrLf & _
+               "ï¿½Ý’ï¿½Vï¿½[ï¿½gï¿½ÌuBHï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Û‘ï¿½ï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½vï¿½ï¿½ï¿½mï¿½Fï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B", _
+               vbCritical, "ï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½Aï¿½Nï¿½Zï¿½Xï¿½Gï¿½ï¿½ï¿½["
+        Set ï¿½ÎÛƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ = Nothing
         Exit Function
     End If
 
@@ -95,13 +122,13 @@ Private Function ‘ÎÛƒtƒ@ƒCƒ‹‚ðŠJ‚­() As Workbook
     Loop
 
     If latestFile = "" Then
-        MsgBox "inputƒtƒHƒ‹ƒ_‚Éxlsxƒtƒ@ƒCƒ‹‚ªŒ©‚Â‚©‚è‚Ü‚¹‚ñB" & vbCrLf & _
-               "ƒtƒHƒ‹ƒ_: " & folderPath & vbCrLf & vbCrLf & _
-               "BHƒvƒ‰ƒ“‚Ìo—Íƒtƒ@ƒCƒ‹‚ðƒtƒHƒ‹ƒ_‚É”z’u‚µ‚Ä‚©‚çÄŽÀs‚µ‚Ä‚­‚¾‚³‚¢B", _
-               vbCritical, "ƒtƒ@ƒCƒ‹‚È‚µ"
-        Set ‘ÎÛƒtƒ@ƒCƒ‹‚ðŠJ‚­ = Nothing
+        MsgBox "inputï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½ï¿½xlsxï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â‚ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½B" & vbCrLf & _
+               "ï¿½tï¿½Hï¿½ï¿½ï¿½_: " & folderPath & vbCrLf & vbCrLf & _
+               "BHï¿½vï¿½ï¿½ï¿½ï¿½ï¿½Ìoï¿½Íƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½tï¿½Hï¿½ï¿½ï¿½_ï¿½É”zï¿½uï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ÄŽï¿½ï¿½sï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B", _
+               vbCritical, "ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½È‚ï¿½"
+        Set ï¿½ÎÛƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ = Nothing
         Exit Function
     End If
 
-    Set ‘ÎÛƒtƒ@ƒCƒ‹‚ðŠJ‚­ = Workbooks.Open(folderPath & latestFile)
+    Set ï¿½ÎÛƒtï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ = Workbooks.Open(folderPath & latestFile)
 End Function

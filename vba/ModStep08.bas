@@ -2,21 +2,21 @@ Attribute VB_Name = "ModStep08"
 Option Explicit
 
 ' ============================================================
-' ƒXƒeƒbƒv‡G: Œv‰æ¶Ys“WŠJi1‘ä1s‰»j
+' ï¿½Xï¿½eï¿½bï¿½vï¿½G: ï¿½vï¿½æ¶ï¿½Yï¿½sï¿½Wï¿½Jï¿½i1ï¿½ï¿½1ï¿½sï¿½ï¿½ï¿½j
 '
-' ‘ÎÛ: F—ñi‹@í–¼j‚ÉuŒv‰æ¶Yv‚ğŠÜ‚Şs ‚©‚Â
-'       N—ñio‰×“új‚ª“–Œ`3ƒ–ŒˆÈ“à
+' ï¿½Îï¿½: Fï¿½ï¿½iï¿½@ï¿½í–¼ï¿½jï¿½Éuï¿½vï¿½æ¶ï¿½Yï¿½vï¿½ï¿½ï¿½Ü‚Şs ï¿½ï¿½ï¿½ï¿½
+'       Nï¿½ï¿½iï¿½oï¿½×“ï¿½ï¿½jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`3ï¿½ï¿½ï¿½ï¿½ï¿½È“ï¿½
 '
-' ˆ—: L—ñi”—Êj‚Ì”‚¾‚¯s‚ğƒRƒs[‚µ‚Ä“WŠJ‚µA
-'       B—ñi¶YŒv‰æNoj––”ö‚É -01,-02... ‚Æ˜A”Ô‚ğ•t—^‚·‚é
+' ï¿½ï¿½ï¿½ï¿½: Lï¿½ï¿½iï¿½ï¿½ï¿½Êjï¿½Ìï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Rï¿½sï¿½[ï¿½ï¿½ï¿½Ä“Wï¿½Jï¿½ï¿½ï¿½A
+'       Bï¿½ï¿½iï¿½ï¿½ï¿½Yï¿½vï¿½ï¿½Noï¿½jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -01,-02... ï¿½Æ˜Aï¿½Ô‚ï¿½tï¿½^ï¿½ï¿½ï¿½ï¿½
 ' ============================================================
-Public Sub Step08_Œv‰æ¶Ys“WŠJ(ws As Worksheet)
+Public Sub Step08_ï¿½vï¿½æ¶ï¿½Yï¿½sï¿½Wï¿½J(ws As Worksheet)
     Dim months3Later As Date
     Dim expandedCount As Long
     expandedCount = 0
     months3Later = DateSerial(Year(g_BaseDate), Month(g_BaseDate) + 3, Day(g_BaseDate))
 
-    ' ‰º‚©‚çˆ—‚·‚é‚±‚Æ‚Ås‘}“üŒã‚ÌƒCƒ“ƒfƒbƒNƒXƒYƒŒ‚ğ–h‚®
+    ' ï¿½ï¿½ï¿½ï¿½ï¿½çˆï¿½ï¿½ï¿½ï¿½ï¿½é‚±ï¿½Æ‚Åsï¿½}ï¿½ï¿½ï¿½ï¿½ÌƒCï¿½ï¿½ï¿½fï¿½bï¿½Nï¿½Xï¿½Yï¿½ï¿½ï¿½ï¿½hï¿½ï¿½
     Dim lastRow As Long
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
 
@@ -24,7 +24,7 @@ Public Sub Step08_Œv‰æ¶Ys“WŠJ(ws As Worksheet)
     For i = lastRow To g_DataStartRow Step -1
         Dim kishuName As String
         kishuName = Trim(CStr(ws.Cells(i, g_ColKishuName).Value))
-        If InStr(kishuName, "Œv‰æ¶Y") = 0 Then GoTo NextRow
+        If InStr(kishuName, "ï¿½vï¿½æ¶ï¿½Y") = 0 Then GoTo NextRow
 
         Dim shukkaDate As Variant
         shukkaDate = ws.Cells(i, g_ColShukkaDate).Value
@@ -32,21 +32,25 @@ Public Sub Step08_Œv‰æ¶Ys“WŠJ(ws As Worksheet)
         If Not IsDate(shukkaDate) Then GoTo NextRow
         If CDate(shukkaDate) > months3Later Then GoTo NextRow
 
+        Dim rawSuryo As Variant
+        rawSuryo = ws.Cells(i, g_ColSuryo).Value
+        If IsEmpty(rawSuryo) Or Not IsNumeric(rawSuryo) Then GoTo NextRow
         Dim suryo As Long
-        suryo = CLng(ws.Cells(i, g_ColSuryo).Value)
+        suryo = CLng(rawSuryo)
         If suryo <= 1 Then GoTo NextRow
 
-        ' Œ³‚Ì¶YŒv‰æNo‚ğæ“¾
+        ' ï¿½ï¿½ï¿½Ìï¿½ï¿½Yï¿½vï¿½ï¿½Noï¿½ï¿½ï¿½æ“¾
         Dim baseNo As String
         baseNo = Trim(CStr(ws.Cells(i, g_ColSeisanNo).Value))
 
-        ' ”—Ê•ª‚Ìs‚ği+1ˆÈ~‚É‘}“ü‚µ‚ÄƒRƒs[iŒã‚ë‚©‚çˆ—j
+        ' Phase 1: suryo-1 ï¿½sï¿½ï¿½}ï¿½ï¿½ï¿½ï¿½ï¿½ÄƒRï¿½sï¿½[
         Dim j As Long
-        For j = suryo To 1 Step -1
-            If j > 1 Then
-                ws.Rows(i + 1).Insert Shift:=xlDown
-                ws.Rows(i).Copy ws.Rows(i + 1)
-            End If
+        For j = 1 To suryo - 1
+            ws.Rows(i + 1).Insert Shift:=xlDown
+            ws.Rows(i).Copy ws.Rows(i + 1)
+        Next j
+        ' Phase 2: ï¿½Aï¿½Ô•tï¿½^ï¿½iï¿½s i ï¿½ï¿½ï¿½ï¿½ i+suryo-1 ï¿½ï¿½ï¿½×‚ÄƒRï¿½sï¿½[ï¿½Ï‚İj
+        For j = 1 To suryo
             ws.Cells(i + j - 1, g_ColSeisanNo).Value = baseNo & "-" & Format(j, "00")
             ws.Cells(i + j - 1, g_ColSuryo).Value = 1
         Next j
@@ -55,5 +59,5 @@ Public Sub Step08_Œv‰æ¶Ys“WŠJ(ws As Worksheet)
 NextRow:
     Next i
 
-    Call ƒƒO‘("Step08_Œv‰æ¶Ys“WŠJ", "¬Œ÷", expandedCount & "Œ‚Ìs“WŠJ‚ğÀ{‚µ‚Ü‚µ‚½")
+    Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½("Step08_ï¿½vï¿½æ¶ï¿½Yï¿½sï¿½Wï¿½J", "ï¿½ï¿½ï¿½ï¿½", expandedCount & "ï¿½ï¿½ï¿½Ìsï¿½Wï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½{ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½")
 End Sub

@@ -2,27 +2,27 @@ Attribute VB_Name = "ModStep10"
 Option Explicit
 
 ' ============================================================
-' ƒXƒeƒbƒv‡I: •À‚Ñ‘Ö‚¦
+' ï¿½Xï¿½eï¿½bï¿½vï¿½I: ï¿½ï¿½ï¿½Ñ‘Ö‚ï¿½
 '
-' ‘Sƒ‚ƒfƒ‹‹¤’Ê‚Ì—Dæ‡ˆÊiãˆÊƒL[‚©‚çj:
-'   1. MODEL(U—ñ): ¸‡
-'   2. ‹@ŠB•i”Ô(H—ñ): ¸‡ ¦ƒƒ“ƒeŒn‚Ì‘æ2ƒL[AV8/V9‚Í‹ó—“‚È‚Ì‚ÅŽÀŽ¿ƒXƒLƒbƒv
-'   3. Œõ^sso‰×“ú(N—ñ): ¸‡
-'   4. ‡˜ŽwŽ¦”­s“ú(M—ñ): ¸‡
-'   5. KP-No(R—ñ): ¸‡
-'   6. ‘®«(I—ñ): ~‡
-'   7. ‹qæ–¼(C—ñ): ¸‡
-'   8. ¶ŽYŒv‰æNo(B—ñ): ¸‡
+' ï¿½Sï¿½ï¿½ï¿½fï¿½ï¿½ï¿½ï¿½ï¿½Ê‚Ì—Dï¿½æ‡ï¿½Êiï¿½ï¿½ÊƒLï¿½[ï¿½ï¿½ï¿½ï¿½j:
+'   1. MODEL(Uï¿½ï¿½): ï¿½ï¿½ï¿½ï¿½
+'   2. ï¿½@ï¿½Bï¿½iï¿½ï¿½(Hï¿½ï¿½): ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½eï¿½nï¿½Ì‘ï¿½2ï¿½Lï¿½[ï¿½AV8/V9ï¿½Í‹ó—“‚È‚Ì‚ÅŽï¿½ï¿½ï¿½ï¿½Xï¿½Lï¿½bï¿½v
+'   3. ï¿½ï¿½ï¿½^ssï¿½oï¿½×“ï¿½(Nï¿½ï¿½): ï¿½ï¿½ï¿½ï¿½
+'   4. ï¿½ï¿½ï¿½ï¿½ï¿½wï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½(Mï¿½ï¿½): ï¿½ï¿½ï¿½ï¿½
+'   5. KP-No(Rï¿½ï¿½): ï¿½ï¿½ï¿½ï¿½
+'   6. ï¿½ï¿½ï¿½ï¿½(Iï¿½ï¿½): ï¿½~ï¿½ï¿½
+'   7. ï¿½qï¿½æ–¼(Cï¿½ï¿½): ï¿½ï¿½ï¿½ï¿½
+'   8. ï¿½ï¿½ï¿½Yï¿½vï¿½ï¿½No(Bï¿½ï¿½): ï¿½ï¿½ï¿½ï¿½
 '
-' ¦ V8/V9‚Ì‹@ŠB•i”Ô‚Í‹ó—“‚Ì‚½‚ßAŽÀŽ¿ V8/V9‚Æƒƒ“ƒe‚ðMODEL‚Å•ª‚¯‚½ŒãA
-'   V8/V9‚Ío‰×“ú¨”­s“ú¨KP-No¨‘®«¨‹qæ–¼¨Œv‰æNo‚Ì‡‚É‚È‚é
+' ï¿½ï¿½ V8/V9ï¿½Ì‹@ï¿½Bï¿½iï¿½Ô‚Í‹ó—“‚Ì‚ï¿½ï¿½ßAï¿½ï¿½ï¿½ï¿½ V8/V9ï¿½Æƒï¿½ï¿½ï¿½ï¿½eï¿½ï¿½MODELï¿½Å•ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½A
+'   V8/V9ï¿½Íoï¿½×“ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½KP-Noï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½qï¿½æ–¼ï¿½ï¿½ï¿½vï¿½ï¿½Noï¿½Ìï¿½ï¿½É‚È‚ï¿½
 ' ============================================================
-Public Sub Step10_•À‚Ñ‘Ö‚¦(ws As Worksheet)
+Public Sub Step10_ï¿½ï¿½ï¿½Ñ‘Ö‚ï¿½(ws As Worksheet)
     Dim lastRow As Long
     lastRow = ws.Cells(ws.Rows.Count, 1).End(xlUp).Row
 
     If lastRow < 2 Then
-        Call ƒƒO‘ž("Step10_•À‚Ñ‘Ö‚¦", "î•ñ", "ƒf[ƒ^‚È‚µAƒXƒLƒbƒv")
+        Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½("Step10_ï¿½ï¿½ï¿½Ñ‘Ö‚ï¿½", "ï¿½ï¿½ï¿½", "ï¿½fï¿½[ï¿½^ï¿½È‚ï¿½ï¿½Aï¿½Xï¿½Lï¿½bï¿½v")
         Exit Sub
     End If
 
@@ -35,17 +35,17 @@ Public Sub Step10_•À‚Ñ‘Ö‚¦(ws As Worksheet)
     With ws.Sort
         .SortFields.Clear
         .SortFields.Add Key:=ws.Columns(g_ColModel),         Order:=xlAscending   ' 1. MODEL
-        .SortFields.Add Key:=ws.Columns(g_ColKikiHinban),    Order:=xlAscending   ' 2. ‹@ŠB•i”Ô
-        .SortFields.Add Key:=ws.Columns(g_ColShukkaDate),    Order:=xlAscending   ' 3. o‰×“ú
-        .SortFields.Add Key:=ws.Columns(g_ColJunjoHakkoDate),Order:=xlAscending   ' 4. ”­s“ú
+        .SortFields.Add Key:=ws.Columns(g_ColKikiHinban),    Order:=xlAscending   ' 2. ï¿½@ï¿½Bï¿½iï¿½ï¿½
+        .SortFields.Add Key:=ws.Columns(g_ColShukkaDate),    Order:=xlAscending   ' 3. ï¿½oï¿½×“ï¿½
+        .SortFields.Add Key:=ws.Columns(g_ColJunjoHakkoDate),Order:=xlAscending   ' 4. ï¿½ï¿½ï¿½sï¿½ï¿½
         .SortFields.Add Key:=ws.Columns(g_ColKPNo),          Order:=xlAscending   ' 5. KP-No
-        .SortFields.Add Key:=ws.Columns(g_ColZokusei),       Order:=xlDescending  ' 6. ‘®«i~‡j
-        .SortFields.Add Key:=ws.Columns(g_ColKyakusakiName), Order:=xlAscending   ' 7. ‹qæ–¼
-        .SortFields.Add Key:=ws.Columns(g_ColSeisanNo),      Order:=xlAscending   ' 8. ¶ŽYŒv‰æNo
+        .SortFields.Add Key:=ws.Columns(g_ColZokusei),       Order:=xlDescending  ' 6. ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½~ï¿½ï¿½ï¿½j
+        .SortFields.Add Key:=ws.Columns(g_ColKyakusakiName), Order:=xlAscending   ' 7. ï¿½qï¿½æ–¼
+        .SortFields.Add Key:=ws.Columns(g_ColSeisanNo),      Order:=xlAscending   ' 8. ï¿½ï¿½ï¿½Yï¿½vï¿½ï¿½No
         .SetRange sortRange
         .Header = xlNo
         .Apply
     End With
 
-    Call ƒƒO‘ž("Step10_•À‚Ñ‘Ö‚¦", "¬Œ÷", "•À‚Ñ‘Ö‚¦Š®—¹i" & lastRow - 1 & "sj")
+    Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½("Step10_ï¿½ï¿½ï¿½Ñ‘Ö‚ï¿½", "ï¿½ï¿½ï¿½ï¿½", "ï¿½ï¿½ï¿½Ñ‘Ö‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½i" & lastRow - g_DataStartRow + 1 & "ï¿½sï¿½j")
 End Sub

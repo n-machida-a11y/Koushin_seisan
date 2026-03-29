@@ -2,32 +2,37 @@ Attribute VB_Name = "ModError"
 Option Explicit
 
 ' ============================================================
-' ˆ—’âŽ~ƒGƒ‰[
-' ŠY“–s‚ð‰©FƒnƒCƒ‰ƒCƒg ¨ ƒƒO‹L˜^ ¨ ƒ|ƒbƒvƒAƒbƒv•\Ž¦ ¨ End ‚Åˆ—’âŽ~
-' ws: ‰ÁH‘ÎÛƒV[ƒg, rowNum: –â‘è‚Ì‚ ‚és”Ô†, message: •\Ž¦ƒƒbƒZ[ƒW
+' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Gï¿½ï¿½ï¿½[
+' ï¿½Yï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½nï¿½Cï¿½ï¿½ï¿½Cï¿½g ï¿½ï¿½ ï¿½ï¿½ï¿½Oï¿½Lï¿½^ ï¿½ï¿½ ï¿½|ï¿½bï¿½vï¿½Aï¿½bï¿½vï¿½\ï¿½ï¿½ ï¿½ï¿½ End ï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½~
+' ws: ï¿½ï¿½ï¿½Hï¿½ÎÛƒVï¿½[ï¿½g, rowNum: ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½sï¿½Ôï¿½, message: ï¿½\ï¿½ï¿½ï¿½ï¿½ï¿½bï¿½Zï¿½[ï¿½W
 ' ============================================================
-Public Sub ˆ—’âŽ~ƒGƒ‰[(ws As Worksheet, rowNum As Long, message As String)
-    ' ŠY“–s‚ð‰©F‚ÅƒnƒCƒ‰ƒCƒg
+Public Sub ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½Gï¿½ï¿½ï¿½[(ws As Worksheet, rowNum As Long, message As String)
+    ' ï¿½Yï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½Fï¿½Åƒnï¿½Cï¿½ï¿½ï¿½Cï¿½g
     ws.Rows(rowNum).Interior.Color = RGB(255, 255, 0)
 
-    ' ƒƒO‚É‹L˜^
-    Call ƒƒO‘ž("ƒGƒ‰[ŒŸo", "ƒGƒ‰[", "s" & rowNum & ": " & message)
+    ' ï¿½ï¿½ï¿½Oï¿½É‹Lï¿½^
+    Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½("ï¿½Gï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½o", "ï¿½Gï¿½ï¿½ï¿½[", "ï¿½s" & rowNum & ": " & message)
 
-    ' ƒ|ƒbƒvƒAƒbƒv•\Ž¦
-    MsgBox "yˆ—’âŽ~z" & vbCrLf & vbCrLf & _
+    ' ï¿½|ï¿½bï¿½vï¿½Aï¿½bï¿½vï¿½\ï¿½ï¿½
+    MsgBox "ï¿½yï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~ï¿½z" & vbCrLf & vbCrLf & _
            message & vbCrLf & vbCrLf & _
-           "s”Ô†: " & rowNum & vbCrLf & vbCrLf & _
-           "ƒIƒ€ƒƒ“’S“–ŽÒ‚É–â‚¢‡‚í‚¹ŒãAƒf[ƒ^‚ðC³‚µ‚ÄÅ‰‚©‚çÄŽÀs‚µ‚Ä‚­‚¾‚³‚¢B", _
-           vbCritical, "¶ŽYŒv‰æŽ©“®‰» - ˆ—’âŽ~"
+           "ï¿½sï¿½Ôï¿½: " & rowNum & vbCrLf & vbCrLf & _
+           "ï¿½Iï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Sï¿½ï¿½ï¿½Ò‚É–â‚¢ï¿½ï¿½ï¿½í‚¹ï¿½ï¿½Aï¿½fï¿½[ï¿½^ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ÄÅï¿½ï¿½ï¿½ï¿½ï¿½ÄŽï¿½ï¿½sï¿½ï¿½ï¿½Ä‚ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½B", _
+           vbCritical, "ï¿½ï¿½ï¿½Yï¿½vï¿½æŽ©ï¿½ï¿½ï¿½ï¿½ - ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½~"
 
-    ' ˆ—‚ðI—¹iÄŠJ‚È‚µj
+    ' Applicationï¿½ï¿½Ô‚Ì•ï¿½ï¿½ï¿½
+    Application.ScreenUpdating = True
+    Application.Calculation = xlCalculationAutomatic
+    Application.EnableEvents = True
+
+    ' ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½iï¿½ÄŠJï¿½È‚ï¿½ï¿½j
     End
 End Sub
 
 ' ============================================================
-' ŒxƒƒOi‘±sj
-' ƒƒO‚É‹L˜^‚·‚é‚Ì‚ÝBƒ|ƒbƒvƒAƒbƒv‚È‚µEˆ—Œp‘±
+' ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½Oï¿½iï¿½ï¿½ï¿½sï¿½j
+' ï¿½ï¿½ï¿½Oï¿½É‹Lï¿½^ï¿½ï¿½ï¿½ï¿½Ì‚ÝBï¿½|ï¿½bï¿½vï¿½Aï¿½bï¿½vï¿½È‚ï¿½ï¿½Eï¿½ï¿½ï¿½ï¿½ï¿½pï¿½ï¿½
 ' ============================================================
-Public Sub ŒxƒƒO(stepName As String, rowNum As Long, message As String)
-    Call ƒƒO‘ž(stepName, "Œx", "s" & rowNum & ": " & message)
+Public Sub ï¿½xï¿½ï¿½ï¿½ï¿½ï¿½O(stepName As String, rowNum As Long, message As String)
+    Call ï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½(stepName, "ï¿½xï¿½ï¿½", "ï¿½s" & rowNum & ": " & message)
 End Sub
