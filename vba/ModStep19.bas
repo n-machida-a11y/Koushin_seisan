@@ -154,19 +154,33 @@ NextHSRow1:
             If CDate(rowDate) < replaceFrom Then GoTo NextHSRow2
         End If
         
-        ' スキップ条件1: R列に日付が入っている
-        Dim rVal As Variant
-        rVal = hsWs.Cells(r, 18).Value  ' R列=18
-        If IsDate(rVal) Then
-            skippedR = skippedR + 1
+        ' スキップ条件: メンテ列に「M」が入っている行
+        ' V8: R列(18)=メンテ、V9: N列(14)=メンテ
+        Dim menteCol As Long
+        If modelType = "V8" Then
+            menteCol = 18  ' V8のR列
+        Else
+            menteCol = 14  ' V9のN列
+        End If
+        Dim menteVal As String
+        menteVal = Trim(CStr(hsWs.Cells(r, menteCol).Value))
+        If UCase(menteVal) = "M" Then
+            skippedN = skippedN + 1
             GoTo NextHSRow2
         End If
         
-        ' スキップ条件2: N列に「M」が入っている
-        Dim nVal As String
-        nVal = Trim(CStr(hsWs.Cells(r, 14).Value))  ' N列=14
-        If UCase(nVal) = "M" Then
-            skippedN = skippedN + 1
+        ' スキップ条件: LAZ完了計画列に日付が入っている行
+        ' V8: N列(14)=LAZ完了計画、V9: K列(11)=LAZ完了計画
+        Dim lazCol As Long
+        If modelType = "V8" Then
+            lazCol = 14  ' V8のN列
+        Else
+            lazCol = 11  ' V9のK列
+        End If
+        Dim lazVal As Variant
+        lazVal = hsWs.Cells(r, lazCol).Value
+        If IsDate(lazVal) Then
+            skippedR = skippedR + 1
             GoTo NextHSRow2
         End If
         
@@ -218,8 +232,8 @@ NextHSRow2:
     psWb.Close SaveChanges:=False
     
     Call ログ書込("Step19", "完了", _
-        modelType & " 差替:" & replacedCount & "行, スキップ(R列日付):" & skippedR & _
-        ", スキップ(N列M):" & skippedN & ", スキップ(S-AY日付):" & skippedSAY)
+        modelType & " 差替:" & replacedCount & "行, スキップ(LAZ日付):" & skippedR & _
+        ", スキップ(メンテM):" & skippedN & ", スキップ(S-AY日付):" & skippedSAY)
     
     星取表差替処理 = replacedCount
 End Function

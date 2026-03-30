@@ -122,6 +122,109 @@ NextRow:
         writtenCount = writtenCount + 1
     Next m
     
+    ' --- 表2: 日次データ（Row28～）の更新 ---
+    ' A=日付, B=V8出荷, C=V8完了, D=V9出荷, E=V9完了, F=BH出荷, G=BH完了
+    ' 出荷・完了計画から当月+4ヶ月の日次データを取得して転記
+    Dim table2Start As Long
+    table2Start = 0
+    Dim tr As Long
+    For tr = 27 To 30
+        Dim hVal As String
+        hVal = Trim(CStr(graphWs.Cells(tr, 1).Value))
+        If hVal = "日" Or InStr(hVal, "日") > 0 Then
+            table2Start = tr + 1
+            Exit For
+        End If
+        ' 日付が入っていれば表2開始
+        If IsDate(graphWs.Cells(tr, 1).Value) Then
+            table2Start = tr
+            Exit For
+        End If
+    Next tr
+    
+    If table2Start > 0 Then
+        ' 表2の既存日付→行マップ
+        Dim t2RowMap As Object
+        Set t2RowMap = CreateObject("Scripting.Dictionary")
+        Dim t2Last As Long
+        t2Last = graphWs.Cells(graphWs.Rows.Count, 1).End(xlUp).Row
+        For tr = table2Start To t2Last
+            Dim t2Date As Variant
+            t2Date = graphWs.Cells(tr, 1).Value
+            If IsDate(t2Date) Then
+                t2RowMap(Format(CDate(t2Date), "YYYY/MM/DD")) = tr
+            End If
+        Next tr
+        
+        ' BHPlanの日付ごとのV8/V9出荷台数（既に集計済みのv8Monthly/v9Monthlyは月次）
+        ' 日次データが必要なので再集計
+        Dim v8Daily As Object
+        Set v8Daily = CreateObject("Scripting.Dictionary")
+        Dim v9Daily As Object
+        Set v9Daily = CreateObject("Scripting.Dictionary")
+        
+        Dim j As Long
+        For j = g_DataStartRow To lastRow
+            Dim mdl As String
+            mdl = Trim(CStr(targetWs.Cells(j, g_ColModel).Value))
+            If mdl <> "V8" And mdl <> "V9" Then GoTo NextDailyRow
+            Dim sd As Variant
+            sd = targetWs.Cells(j, g_ColShukkaDate).Value
+            If IsEmpty(sd) Or Not IsDate(sd) Then GoTo NextDailyRow
+            If CDate(sd) < g_BaseDate Then GoTo NextDailyRow
+            Dim sq As Variant
+            sq = targetWs.Cells(j, g_ColSuryo).Value
+            If IsEmpty(sq) Or Not IsNumeric(sq) Then GoTo NextDailyRow
+            Dim ddk As String
+            ddk = Format(CDate(sd), "YYYY/MM/DD")
+            If mdl = "V8" Then
+                If v8Daily.Exists(ddk) Then
+                    v8Daily(ddk) = v8Daily(ddk) + CLng(sq)
+                Else
+                    v8Daily.Add ddk, CLng(sq)
+                End If
+            Else
+                If v9Daily.Exists(ddk) Then
+                    v9Daily(ddk) = v9Daily(ddk) + CLng(sq)
+                Else
+                    v9Daily.Add ddk, CLng(sq)
+                End If
+            End If
+NextDailyRow:
+        Next j
+        
+        ' 表2に書き込み
+        Dim dailyWritten As Long
+        dailyWritten = 0
+        Dim dKey As Variant
+        For Each dKey In v8Daily.Keys
+            If t2RowMap.Exists(CStr(dKey)) Then
+                Dim dRow As Long
+                dRow = t2RowMap(CStr(dKey))
+                Dim v8d As Long
+                Dim v9d As Long
+                v8d = v8Daily(dKey)
+                v9d = 0
+                If v9Daily.Exists(CStr(dKey)) Then v9d = v9Daily(CStr(dKey))
+                graphWs.Cells(dRow, 2).Value = v8d  ' B: V8出荷
+                graphWs.Cells(dRow, 4).Value = v9d  ' D: V9出荷
+                graphWs.Cells(dRow, 6).Value = v8d + v9d  ' F: BH出荷台数
+                dailyWritten = dailyWritten + 1
+            End If
+        Next dKey
+        ' V9のみの日付も処理
+        For Each dKey In v9Daily.Keys
+            If Not v8Daily.Exists(CStr(dKey)) Then
+                If t2RowMap.Exists(CStr(dKey)) Then
+                    dRow = t2RowMap(CStr(dKey))
+                    graphWs.Cells(dRow, 4).Value = v9Daily(dKey)
+                    graphWs.Cells(dRow, 6).Value = v9Daily(dKey)
+                    dailyWritten = dailyWritten + 1
+                End If
+            End If
+        Next dKey
+    End If
+    
     psWb.Save
     psWb.Close SaveChanges:=False
     
