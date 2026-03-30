@@ -90,7 +90,7 @@ Private Function 台数書込(filePath As String, sheetName As String, counts As Obj
         Exit Function
     End If
     
-    ' 合計行を探す（E列にSUM関数がある行を上から検索）
+    ' 合計行を探す（B列が空でE列とF列とG列に値がある行）
     Dim sumRow As Long
     sumRow = 0
     Dim scanLast As Long
@@ -98,8 +98,12 @@ Private Function 台数書込(filePath As String, sheetName As String, counts As Obj
     
     Dim r As Long
     For r = 6 To scanLast
-        If ws.Cells(r, 5).HasFormula Then
-            If InStr(UCase(ws.Cells(r, 5).Formula), "SUM") > 0 Then
+        Dim bEmpty As Boolean
+        bEmpty = IsEmpty(ws.Cells(r, 2).Value) Or Trim(CStr(ws.Cells(r, 2).Value)) = ""
+        If bEmpty Then
+            If Not IsEmpty(ws.Cells(r, 5).Value) And _
+               Not IsEmpty(ws.Cells(r, 6).Value) And _
+               Not IsEmpty(ws.Cells(r, 7).Value) Then
                 sumRow = r
                 Exit For
             End If
