@@ -2,27 +2,25 @@ Attribute VB_Name = "ModStep14"
 Option Explicit
 
 ' ============================================================
-' ステップ⑭: 出荷・完了計画に当月+3ヶ月後の日付を追加
+' Step14: 出荷・完了計画に当月+3ヶ月後の日付を追加
 '
-' V8/V9のProduction Scheduleの「出荷・完了計画」シートに
-' 当月から3ヶ月後までの日付行を追加する（まだない日付のみ）
+' V8/V9のProduction Scheduleの「出荷・完了計画」シートの
+' 合計行(SUM関数がある行)の上に、まだない日付行を挿入する
 ' D列に稼働日フラグ(○/×)を設定
 ' ============================================================
 Public Sub Step14_出荷完了計画日付追加(targetWs As Worksheet)
     Dim months3Later As Date
-    months3Later = DateSerial(Year(g_BaseDate), Month(g_BaseDate) + 4, 0)  ' 3ヶ月後の末日
+    months3Later = DateSerial(Year(g_BaseDate), Month(g_BaseDate) + 4, 0)
     
     Dim addedV8 As Long
     Dim addedV9 As Long
     addedV8 = 0
     addedV9 = 0
     
-    ' V8 Production Schedule
     If g_V8ProdSchedulePath <> "" Then
         addedV8 = 日付追加処理(g_V8ProdSchedulePath, g_SheetV8ShukkaKeikaku, months3Later)
     End If
     
-    ' V9 Production Schedule
     If g_V9ProdSchedulePath <> "" Then
         addedV9 = 日付追加処理(g_V9ProdSchedulePath, g_SheetV9ShukkaKeikaku, months3Later)
     End If
@@ -33,13 +31,12 @@ End Sub
 
 ' ============================================================
 ' 指定ファイルの出荷・完了計画シートに日付行を追加
-' 戻り値: 追加した日数
+' 合計行(E列にSUM関数がある行)の上に挿入する
 ' ============================================================
 Private Function 日付追加処理(filePath As String, sheetName As String, endDate As Date) As Long
     Dim wb As Workbook
     Dim ws As Worksheet
     
-    ' ファイルを開く
     On Error Resume Next
     Set wb = Workbooks.Open(filePath)
     On Error GoTo 0
@@ -57,14 +54,33 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
         Exit Function
     End If
     
-    ' 既存の日付を収集（B列）
-    Dim existingDates As Object
-    Set existingDates = CreateObject("Scripting.Dictionary")
+    ' 合計行を探す（E列にSUM関数がある行）
+    Dim sumRow As Long
+    sumRow = 0
     Dim lastRow As Long
     lastRow = ws.Cells(ws.Rows.Count, 2).End(xlUp).Row
     
     Dim r As Long
-    For r = 2 To lastRow
+    For r = lastRow To 6 Step -1
+        If ws.Cells(r, 5).HasFormula Then
+            If InStr(UCase(ws.Cells(r, 5).Formula), "SUM") > 0 Then
+                sumRow = r
+                Exit For
+            End If
+        End If
+    Next r
+    
+    If sumRow = 0 Then
+        Call ログ書込("Step14", "警告", "合計行(SUM関数)が見つかりません: " & sheetName)
+        wb.Close SaveChanges:=False
+        日付追加処理 = 0
+        Exit Function
+    End If
+    
+    ' 既存の日付を収集（B列、合計行の手前まで）
+    Dim existingDates As Object
+    Set existingDates = CreateObject("Scripting.Dictionary")
+    For r = 6 To sumRow - 1
         Dim cellVal As Variant
         cellVal = ws.Cells(r, 2).Value
         If IsDate(cellVal) Then
@@ -76,7 +92,7 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
         End If
     Next r
     
-    ' 当月1日から endDate まで、日ごとにチェック
+    ' 当月1日からendDateまで、ない日付を合計行の上に挿入
     Dim currentDate As Date
     Dim addedCount As Long
     addedCount = 0
@@ -86,28 +102,31 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
         dateKey = Format(currentDate, "YYYY/MM/DD")
         
         If Not existingDates.Exists(dateKey) Then
-            ' 新しい行を追加
-            lastRow = lastRow + 1
-            ws.Cells(lastRow, 1).Value = Format(currentDate, "YY/MM")  ' A列: 年月
-            ws.Cells(lastRow, 2).Value = currentDate                    ' B列: 日付
-            ws.Cells(lastRow, 3).Value = WeekdayName(Weekday(currentDate), True)  ' C列: 曜日
+            ' 合計行の上に行を挿入
+            ws.Rows(sumRow).Insert Shift:=xlDown
             
-            ' D列: 稼働日フラグ（土日は×、平日は○。祝日は稼働日カレンダーで別途対応）
+            ' 挿入した行にデータを設定
+            ws.Cells(sumRow, 1).Value = Format(currentDate, "YY/MM")
+            ws.Cells(sumRow, 2).Value = currentDate
+            ws.Cells(sumRow, 2).NumberFormat = "M/D"
+            ws.Cells(sumRow, 3).Value = Mid("月火水木金土日", Weekday(currentDate, vbMonday), 1)
+            
+            ' D列: 稼働日フラグ
             Dim wd As Long
-            wd = Weekday(currentDate, vbMonday)  ' 月=1, 日=7
-            If wd >= 6 Then  ' 土日
-                ws.Cells(lastRow, 4).Value = "×"
+            wd = Weekday(currentDate, vbMonday)
+            If wd >= 6 Then
+                ws.Cells(sumRow, 4).Value = "×"
             Else
-                ws.Cells(lastRow, 4).Value = "○"
+                ws.Cells(sumRow, 4).Value = "○"
             End If
             
+            ' 合計行が1行下にずれるので更新
+            sumRow = sumRow + 1
             addedCount = addedCount + 1
         End If
         
         currentDate = currentDate + 1
     Loop
-    
-    ' ※結合セルがあるためソートは行わない（日付は末尾に追加される）
     
     wb.Save
     wb.Close SaveChanges:=False
