@@ -187,6 +187,36 @@ NextRow:
             shukeiWs.Cells(targetRow, targetCol).Value = dict(dk)
             writtenCount = writtenCount + 1
         End If
+        
+        ' 罫線: 同じ月=hair(点線)、月末=double(二重線)
+        Dim nextDateKey As String
+        Dim isMonthEnd As Boolean
+        isMonthEnd = False
+        ' 次の行の日付と月を比較
+        If targetRow < shukeiLastRow Then
+            Dim nextB As Variant
+            nextB = shukeiWs.Cells(targetRow + 1, 2).Value
+            If IsDate(CDate(dkDate)) And IsDate(nextB) Then
+                If Month(CDate(dkDate)) <> Month(CDate(nextB)) Then
+                    isMonthEnd = True
+                End If
+            End If
+        Else
+            isMonthEnd = True
+        End If
+        
+        Dim bc2 As Long
+        For bc2 = 1 To nextCol - 1
+            With shukeiWs.Cells(targetRow, bc2).Borders(xlEdgeBottom)
+                .LineStyle = xlContinuous
+                If isMonthEnd Then
+                    .Weight = xlMedium
+                    .LineStyle = xlDouble
+                Else
+                    .Weight = xlHairline
+                End If
+            End With
+        Next bc2
     Next dk
     
     ' 保存して閉じる

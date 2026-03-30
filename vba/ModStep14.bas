@@ -132,6 +132,25 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
                 ws.Cells(sumRow, 4).Value = "○"
             End If
             
+            ' 罫線: 横=hair(点線)、縦=thin(普通)
+            Dim lastUsedCol As Long
+            lastUsedCol = ws.UsedRange.Columns.Count
+            Dim bc As Long
+            For bc = 1 To lastUsedCol
+                With ws.Cells(sumRow, bc).Borders(xlEdgeBottom)
+                    .LineStyle = xlContinuous
+                    .Weight = xlHairline
+                End With
+                With ws.Cells(sumRow, bc).Borders(xlEdgeLeft)
+                    .LineStyle = xlContinuous
+                    .Weight = xlThin
+                End With
+                With ws.Cells(sumRow, bc).Borders(xlEdgeRight)
+                    .LineStyle = xlContinuous
+                    .Weight = xlThin
+                End With
+            Next bc
+            
             ' 合計行が1行下にずれるので更新
             sumRow = sumRow + 1
             addedCount = addedCount + 1
