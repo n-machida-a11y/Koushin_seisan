@@ -109,10 +109,6 @@ Public Sub Phase1B1実行()
     Call Step13_集計表作成(targetWs)
     Call Step14_出荷完了計画日付追加(targetWs)
     Call Step15_出荷台数入力(targetWs)
-    Call Step17_V8マスター更新(targetWs)
-    Call Step18_V9マスター更新(targetWs)
-    Call Step19_星取表差替(targetWs)
-    Call Step20_グラフ更新(targetWs)
 
     On Error GoTo 0
 
@@ -121,9 +117,11 @@ Public Sub Phase1B1実行()
     Application.EnableEvents = True
 
     Call ログ書込("Phase1B1実行", "成功", "Phase 1-B1 処理完了")
-    MsgBox "Phase 1-B1 完了（集計・転記）" & vbCrLf & vbCrLf & _
-           "「ログ」シートで結果を確認してください。" & vbCrLf & _
-           "問題なければ Phase 1-B2 を実行してください。", vbInformation, "完了"
+    MsgBox "Phase 1-B1 完了（集計・日付・台数入力）" & vbCrLf & vbCrLf & _
+           "【次の作業】" & vbCrLf & _
+           "出荷・完了計画のF列（光真完了台数）に" & vbCrLf & _
+           "平準化した台数を手作業で入力してください。" & vbCrLf & vbCrLf & _
+           "平準化が完了したら Phase 1-B2 を実行してください。", vbInformation, "完了"
     Exit Sub
 
 ErrB1:
@@ -136,7 +134,7 @@ ErrB1:
 End Sub
 
 ' ============================================================
-' Phase 1-B2 実行: KMP関連（Step21～26）
+' Phase 1-B2 実行: マスター更新・KMP関連（Step17～26）
 ' ============================================================
 Public Sub Phase1B2実行()
     Application.AskToUpdateLinks = False
@@ -156,7 +154,7 @@ Public Sub Phase1B2実行()
         Exit Sub
     End If
 
-    Call ログ書込("Phase1B2実行", "情報", "KMP関連開始: " & targetWb.Name)
+    Call ログ書込("Phase1B2実行", "情報", "マスター更新・KMP関連開始: " & targetWb.Name)
 
     Application.ScreenUpdating = False
     Application.Calculation = xlCalculationManual
@@ -164,6 +162,10 @@ Public Sub Phase1B2実行()
 
     On Error GoTo ErrB2
 
+    Call Step17_V8マスター更新(targetWs)
+    Call Step18_V9マスター更新(targetWs)
+    Call Step19_星取表差替(targetWs)
+    Call Step20_グラフ更新(targetWs)
     Call Step21_KMPユニット必要台数(targetWs)
     Call Step22_KMPシップメント更新(targetWs)
     Call Step24_KMP出荷スケジュール更新(targetWs)
@@ -177,7 +179,7 @@ Public Sub Phase1B2実行()
     Application.EnableEvents = True
 
     Call ログ書込("Phase1B2実行", "成功", "Phase 1-B2 処理完了")
-    MsgBox "Phase 1-B2 完了（KMP関連）" & vbCrLf & vbCrLf & _
+    MsgBox "Phase 1-B2 完了（マスター更新・KMP関連）" & vbCrLf & vbCrLf & _
            "「ログ」シートで結果を確認してください。" & vbCrLf & _
            "全フェーズの処理が完了しました。", vbInformation, "完了"
     Exit Sub
