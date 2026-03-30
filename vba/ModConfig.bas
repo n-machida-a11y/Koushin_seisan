@@ -37,6 +37,20 @@ Public g_V9ProdSchedulePath     As String  ' V9 Production Scheduleパス
 Public g_HoshitoriMasterPath    As String  ' 星取表計算マスターパス
 Public g_BHPlan0110Path         As String  ' 0110BHPlanパス
 
+' シート名設定
+Public g_SheetV8Shukei          As String  ' V8: 0110集計シート名
+Public g_SheetV8ShukkaKeikaku   As String  ' V8: 出荷・完了計画シート名
+Public g_SheetV9ShukkaKeikaku   As String  ' V9: 出荷・完了計画シート名
+Public g_SheetV8Hoshitori       As String  ' V8: 星取表シート名
+Public g_SheetV9Hoshitori       As String  ' V9: 星取表シート名
+Public g_SheetBHGraph           As String  ' BH出荷・完了グラフシート名
+Public g_SheetV8KMPShipment     As String  ' V8: KMP SHIPMENT PLANシート名
+Public g_SheetV9KMPShipment     As String  ' V9: KMP SHIPMENT PLANシート名
+Public g_SheetKMPSchedule       As String  ' KMP出荷スケジュールシート名
+Public g_SheetKMPMPS            As String  ' KMP MPSシート名
+Public g_SheetV8Master          As String  ' V8星取日程マスターシート名
+Public g_SheetV9Master          As String  ' V9星取表日程マスターシート名
+
 Public g_InquiryEmail           As String  ' 問い合わせ先メール
 Public g_DataStartRow           As Long    ' データ開始行番号（ヘッダー行の次の行）
 
@@ -99,6 +113,19 @@ Public Sub 設定読み込み()
             Case "V9_ProductionScheduleパス":            g_V9ProdSchedulePath = val
             Case "星取表計算マスターパス":                g_HoshitoriMasterPath = val
             Case "0110BHPlanパス":                       g_BHPlan0110Path = val
+            ' シート名設定
+            Case "シート名_V8_0110集計":                 g_SheetV8Shukei = val
+            Case "シート名_V8_出荷完了計画":             g_SheetV8ShukkaKeikaku = val
+            Case "シート名_V9_出荷完了計画":             g_SheetV9ShukkaKeikaku = val
+            Case "シート名_V8_星取表":                   g_SheetV8Hoshitori = val
+            Case "シート名_V9_星取表":                   g_SheetV9Hoshitori = val
+            Case "シート名_BH出荷完了グラフ":            g_SheetBHGraph = val
+            Case "シート名_V8_KMP_SHIPMENT":             g_SheetV8KMPShipment = val
+            Case "シート名_V9_KMP_SHIPMENT":             g_SheetV9KMPShipment = val
+            Case "シート名_KMP出荷スケジュール":         g_SheetKMPSchedule = val
+            Case "シート名_KMP_MPS":                     g_SheetKMPMPS = val
+            Case "シート名_V8星取日程マスター":           g_SheetV8Master = val
+            Case "シート名_V9星取表日程マスター":         g_SheetV9Master = val
         End Select
     Next i
 

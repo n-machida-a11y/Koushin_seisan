@@ -26,10 +26,10 @@ Public Sub Step18_V9マスター更新(targetWs As Worksheet)
     
     Dim masterWs As Worksheet
     On Error Resume Next
-    Set masterWs = masterWb.Sheets("V9星取表日程マスター")
+    Set masterWs = masterWb.Sheets(g_SheetV9Master)
     On Error GoTo 0
     If masterWs Is Nothing Then
-        Call ログ書込("Step18_V9マスター更新", "エラー", "V9星取表日程マスターシートが見つかりません")
+        Call ログ書込("Step18_V9マスター更新", "エラー", "V9星取表日程マスターシートが見つかりません（設定: " & g_SheetV9Master & "）")
         masterWb.Close SaveChanges:=False
         Exit Sub
     End If

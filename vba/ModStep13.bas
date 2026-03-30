@@ -86,10 +86,10 @@ NextRow:
     Set psWb = Workbooks.Open(psPath)
     Dim shukeiWs As Worksheet
     On Error Resume Next
-    Set shukeiWs = psWb.Sheets("0110集計")
+    Set shukeiWs = psWb.Sheets(g_SheetV8Shukei)
     On Error GoTo 0
     If shukeiWs Is Nothing Then
-        Call ログ書込("Step13_集計表作成", "エラー", "0110集計シートが見つかりません")
+        Call ログ書込("Step13_集計表作成", "エラー", "0110集計シートが見つかりません（設定: " & g_SheetV8Shukei & "）")
         psWb.Close SaveChanges:=False
         Exit Sub
     End If

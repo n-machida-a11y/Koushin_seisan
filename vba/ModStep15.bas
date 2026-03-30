@@ -57,14 +57,14 @@ NextRow:
     Dim v8Written As Long
     v8Written = 0
     If g_V8ProdSchedulePath <> "" And v8Counts.Count > 0 Then
-        v8Written = 台数書込(g_V8ProdSchedulePath, "Ｖ８出荷・完了計画", v8Counts)
+        v8Written = 台数書込(g_V8ProdSchedulePath, g_SheetV8ShukkaKeikaku, v8Counts)
     End If
     
     ' --- V9出荷・完了計画に書き込み ---
     Dim v9Written As Long
     v9Written = 0
     If g_V9ProdSchedulePath <> "" And v9Counts.Count > 0 Then
-        v9Written = 台数書込(g_V9ProdSchedulePath, "Ｖ９－BH出荷・完了計画", v9Counts)
+        v9Written = 台数書込(g_V9ProdSchedulePath, g_SheetV9ShukkaKeikaku, v9Counts)
     End If
     
     Call ログ書込("Step15_出荷台数入力", "完了", _

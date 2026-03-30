@@ -19,12 +19,12 @@ Public Sub Step14_出荷完了計画日付追加(targetWs As Worksheet)
     
     ' V8 Production Schedule
     If g_V8ProdSchedulePath <> "" Then
-        addedV8 = 日付追加処理(g_V8ProdSchedulePath, "Ｖ８出荷・完了計画", months3Later)
+        addedV8 = 日付追加処理(g_V8ProdSchedulePath, g_SheetV8ShukkaKeikaku, months3Later)
     End If
     
     ' V9 Production Schedule
     If g_V9ProdSchedulePath <> "" Then
-        addedV9 = 日付追加処理(g_V9ProdSchedulePath, "Ｖ９－BH出荷・完了計画", months3Later)
+        addedV9 = 日付追加処理(g_V9ProdSchedulePath, g_SheetV9ShukkaKeikaku, months3Later)
     End If
     
     Call ログ書込("Step14_出荷完了計画日付追加", "完了", _
