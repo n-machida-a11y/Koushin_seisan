@@ -110,7 +110,15 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
             ws.Rows(sumRow).Insert Shift:=xlDown
             
             ' 挿入した行にデータを設定
-            ws.Cells(sumRow, 1).Value = Format(currentDate, "YY/MM")
+            ' A列: 年度（4月始まり。1～3月は前年度）
+            Dim nendo As Long
+            If Month(currentDate) >= 4 Then
+                nendo = Year(currentDate) Mod 100
+            Else
+                nendo = (Year(currentDate) - 1) Mod 100
+            End If
+            ws.Cells(sumRow, 1).Value = nendo
+            ' B列: MM/DD形式の日付
             ws.Cells(sumRow, 2).Value = currentDate
             ws.Cells(sumRow, 2).NumberFormat = "M/D"
             ws.Cells(sumRow, 3).Value = Mid("月火水木金土日", Weekday(currentDate, vbMonday), 1)
