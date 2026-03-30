@@ -61,7 +61,7 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
     lastRow = ws.Cells(ws.Rows.Count, 2).End(xlUp).Row
     
     Dim r As Long
-    For r = 6 To lastRow
+    For r = 6 To lastRow + 20  ' 合計行はB列最終行の直後にあるため余裕を持つ
         Dim bEmpty As Boolean
         bEmpty = IsEmpty(ws.Cells(r, 2).Value) Or Trim(CStr(ws.Cells(r, 2).Value)) = ""
         If bEmpty Then

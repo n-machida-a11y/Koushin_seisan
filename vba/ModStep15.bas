@@ -97,7 +97,7 @@ Private Function 台数書込(filePath As String, sheetName As String, counts As Obj
     scanLast = ws.Cells(ws.Rows.Count, 2).End(xlUp).Row
     
     Dim r As Long
-    For r = 6 To scanLast
+    For r = 6 To scanLast + 20  ' 合計行はB列最終行の直後にあるため余裕を持つ
         Dim bEmpty As Boolean
         bEmpty = IsEmpty(ws.Cells(r, 2).Value) Or Trim(CStr(ws.Cells(r, 2).Value)) = ""
         If bEmpty Then
