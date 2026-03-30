@@ -159,11 +159,23 @@ NextRow:
         If rowMap.Exists(dkDate) Then
             targetRow = rowMap(dkDate)
         Else
-            ' 新しい日付行を末尾に追加
-            shukeiLastRow = shukeiLastRow + 1
-            targetRow = shukeiLastRow
+            ' 新しい日付行を総計行の上に挿入
+            ' 総計行を探す
+            Dim insertRow As Long
+            insertRow = shukeiLastRow + 1  ' デフォルトは末尾
+            Dim sr As Long
+            For sr = shukeiLastRow To 4 Step -1
+                Dim bVal As String
+                bVal = Trim(CStr(shukeiWs.Cells(sr, 2).Value))
+                If bVal = "総計" Or InStr(bVal, "総計") > 0 Then
+                    insertRow = sr
+                    shukeiWs.Rows(sr).Insert Shift:=xlDown
+                    shukeiLastRow = shukeiLastRow + 1
+                    Exit For
+                End If
+            Next sr
+            targetRow = insertRow
             shukeiWs.Cells(targetRow, 2).Value = CDate(dkDate)
-            ' A列に年月コード (YY/MM形式)
             shukeiWs.Cells(targetRow, 1).Value = Format(CDate(dkDate), "YY/MM")
             rowMap.Add dkDate, targetRow
         End If
