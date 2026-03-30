@@ -90,14 +90,14 @@ Private Function 台数書込(filePath As String, sheetName As String, counts As Obj
         Exit Function
     End If
     
-    ' 合計行を探す（E列にSUM関数がある行）
+    ' 合計行を探す（E列にSUM関数がある行を上から検索）
     Dim sumRow As Long
     sumRow = 0
     Dim scanLast As Long
     scanLast = ws.Cells(ws.Rows.Count, 2).End(xlUp).Row
     
     Dim r As Long
-    For r = scanLast To 6 Step -1
+    For r = 6 To scanLast
         If ws.Cells(r, 5).HasFormula Then
             If InStr(UCase(ws.Cells(r, 5).Formula), "SUM") > 0 Then
                 sumRow = r

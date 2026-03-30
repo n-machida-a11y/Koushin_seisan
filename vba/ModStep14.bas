@@ -54,14 +54,14 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
         Exit Function
     End If
     
-    ' 合計行を探す（E列にSUM関数がある行）
+    ' 合計行を探す（E列にSUM関数がある行を上から検索）
     Dim sumRow As Long
     sumRow = 0
     Dim lastRow As Long
     lastRow = ws.Cells(ws.Rows.Count, 2).End(xlUp).Row
     
     Dim r As Long
-    For r = lastRow To 6 Step -1
+    For r = 6 To lastRow
         If ws.Cells(r, 5).HasFormula Then
             If InStr(UCase(ws.Cells(r, 5).Formula), "SUM") > 0 Then
                 sumRow = r
