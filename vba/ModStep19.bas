@@ -134,8 +134,7 @@ NextBHPRow:
 NextHSRow1:
     Next r
     
-    Call ログ書込("Step19", "情報", _
-        modelType & " 差し替え起点: " & Format(replaceFrom, "YYYY/MM/DD"))
+    ' 差し替え起点: replaceFrom
     
     ' 差し替え実行
     Dim replacedCount As Long
@@ -183,8 +182,7 @@ NextHSRow1:
         Next c
         If hasDateInSAY Then
             skippedSAY = skippedSAY + 1
-            Call ログ書込("Step19", "情報", _
-                "行" & r & ": S～AY列に日付あり（スキップ）KP:" & hsWs.Cells(r, hsKPCol).Value)
+            ' S-AY列日付ありスキップ
             GoTo NextHSRow2
         End If
         
@@ -219,7 +217,7 @@ NextHSRow2:
     psWb.Save
     psWb.Close SaveChanges:=False
     
-    Call ログ書込("Step19", "情報", _
+    Call ログ書込("Step19", "完了", _
         modelType & " 差替:" & replacedCount & "行, スキップ(R列日付):" & skippedR & _
         ", スキップ(N列M):" & skippedN & ", スキップ(S-AY日付):" & skippedSAY)
     
