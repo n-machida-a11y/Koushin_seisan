@@ -14,9 +14,7 @@ Public Sub Step22_KMPシップメント更新(targetWs As Worksheet)
     Set psWb = Workbooks.Open(g_V8ProdSchedulePath)
     
     Dim kmpWs As Worksheet
-    On Error Resume Next
-    Set kmpWs = psWb.Sheets(g_SheetV8KMPShipment)
-    On Error GoTo 0
+    Set kmpWs = シート検索(psWb, g_SheetV8KMPShipment)
     If kmpWs Is Nothing Then
         Call ログ書込("Step22", "エラー", "V8 KMP SHIPMENT PLANシートが見つかりません（設定: " & g_SheetV8KMPShipment & "）")
         psWb.Close SaveChanges:=False

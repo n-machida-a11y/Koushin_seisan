@@ -61,9 +61,7 @@ NextRow:
     Set psWb = Workbooks.Open(g_V8ProdSchedulePath)
     
     Dim graphWs As Worksheet
-    On Error Resume Next
-    Set graphWs = psWb.Sheets(g_SheetBHGraph)
-    On Error GoTo 0
+    Set graphWs = シート検索(psWb, g_SheetBHGraph)
     If graphWs Is Nothing Then
         Call ログ書込("Step20_グラフ更新", "エラー", "BH出荷・完了グラフシートが見つかりません（設定: " & g_SheetBHGraph & "）")
         psWb.Close SaveChanges:=False

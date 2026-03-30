@@ -14,9 +14,7 @@ Public Sub Step25_KMP_MPS更新(targetWs As Worksheet)
     Set psWb = Workbooks.Open(g_V8ProdSchedulePath)
     
     Dim mpsWs As Worksheet
-    On Error Resume Next
-    Set mpsWs = psWb.Sheets(g_SheetKMPMPS)
-    On Error GoTo 0
+    Set mpsWs = シート検索(psWb, g_SheetKMPMPS)
     If mpsWs Is Nothing Then
         Call ログ書込("Step25", "エラー", "KMP MPSシートが見つかりません（設定: " & g_SheetKMPMPS & "）")
         psWb.Close SaveChanges:=False

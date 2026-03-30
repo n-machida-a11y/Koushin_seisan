@@ -49,9 +49,7 @@ Private Function 日付追加処理(filePath As String, sheetName As String, endDate A
         Exit Function
     End If
     
-    On Error Resume Next
-    Set ws = wb.Sheets(sheetName)
-    On Error GoTo 0
+    Set ws = シート検索(wb, sheetName)
     If ws Is Nothing Then
         Call ログ書込("Step14", "警告", "シートが見つかりません: " & sheetName)
         wb.Close SaveChanges:=False

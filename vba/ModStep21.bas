@@ -16,9 +16,7 @@ Public Sub Step21_KMPユニット必要台数(targetWs As Worksheet)
     Set psWb = Workbooks.Open(g_V8ProdSchedulePath)
     
     Dim hsWs As Worksheet
-    On Error Resume Next
-    Set hsWs = psWb.Sheets(g_SheetV8Hoshitori)
-    On Error GoTo 0
+    Set hsWs = シート検索(psWb, g_SheetV8Hoshitori)
     If hsWs Is Nothing Then
         Call ログ書込("Step21", "エラー", "V8星取表シートが見つかりません（設定: " & g_SheetV8Hoshitori & "）")
         psWb.Close SaveChanges:=False

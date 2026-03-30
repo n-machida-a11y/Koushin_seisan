@@ -136,3 +136,35 @@ ErrHandler:
            "エラー: " & Err.Description, vbCritical, "設定読み込みエラー"
     End
 End Sub
+
+
+' ============================================================
+' シート名でシートを取得（完全一致→部分一致のフォールバック）
+' 末尾スペース等の微妙な違いに対応
+' ============================================================
+Public Function シート検索(wb As Workbook, sheetName As String) As Worksheet
+    ' 1. 完全一致
+    On Error Resume Next
+    Set シート検索 = wb.Sheets(sheetName)
+    On Error GoTo 0
+    If Not シート検索 Is Nothing Then Exit Function
+    
+    ' 2. Trim一致
+    Dim ws As Worksheet
+    For Each ws In wb.Sheets
+        If Trim(ws.Name) = Trim(sheetName) Then
+            Set シート検索 = ws
+            Exit Function
+        End If
+    Next ws
+    
+    ' 3. 部分一致（sheetNameを含むシート）
+    For Each ws In wb.Sheets
+        If InStr(ws.Name, sheetName) > 0 Then
+            Set シート検索 = ws
+            Exit Function
+        End If
+    Next ws
+    
+    Set シート検索 = Nothing
+End Function

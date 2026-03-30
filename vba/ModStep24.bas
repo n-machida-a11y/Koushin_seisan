@@ -14,9 +14,7 @@ Public Sub Step24_KMP出荷スケジュール更新(targetWs As Worksheet)
     Set psWb = Workbooks.Open(g_V8ProdSchedulePath)
     
     Dim kmpWs As Worksheet
-    On Error Resume Next
-    Set kmpWs = psWb.Sheets(g_SheetV8KMPShipment)
-    On Error GoTo 0
+    Set kmpWs = シート検索(psWb, g_SheetV8KMPShipment)
     If kmpWs Is Nothing Then
         Call ログ書込("Step24", "エラー", "KMP SHIPMENT PLANシートが見つかりません")
         psWb.Close SaveChanges:=False
@@ -41,9 +39,7 @@ Public Sub Step24_KMP出荷スケジュール更新(targetWs As Worksheet)
     Next r
     
     Dim schedWs As Worksheet
-    On Error Resume Next
-    Set schedWs = psWb.Sheets(g_SheetKMPSchedule)
-    On Error GoTo 0
+    Set schedWs = シート検索(psWb, g_SheetKMPSchedule)
     If schedWs Is Nothing Then
         Call ログ書込("Step24", "エラー", "KMP出荷スケジュールシートが見つかりません（設定: " & g_SheetKMPSchedule & "）")
         psWb.Close SaveChanges:=False

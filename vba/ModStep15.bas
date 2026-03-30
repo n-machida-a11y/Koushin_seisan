@@ -86,9 +86,7 @@ Private Function ‘ä”‘(filePath As String, sheetName As String, counts As Obj
         Exit Function
     End If
     
-    On Error Resume Next
-    Set ws = wb.Sheets(sheetName)
-    On Error GoTo 0
+    Set ws = ƒV[ƒgŒŸõ(wb, sheetName)
     If ws Is Nothing Then
         wb.Close SaveChanges:=False
         ‘ä”‘ = 0

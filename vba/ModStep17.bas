@@ -29,9 +29,7 @@ Public Sub Step17_V8マスター更新(targetWs As Worksheet)
     End If
     
     Dim masterWs As Worksheet
-    On Error Resume Next
-    Set masterWs = masterWb.Sheets(g_SheetV8Master)
-    On Error GoTo 0
+    Set masterWs = シート検索(masterWb, g_SheetV8Master)
     If masterWs Is Nothing Then
         Call ログ書込("Step17_V8マスター更新", "エラー", "V8星取日程マスターシートが見つかりません（設定: " & g_SheetV8Master & "）")
         masterWb.Close SaveChanges:=False
