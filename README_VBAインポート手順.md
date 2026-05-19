@@ -79,7 +79,7 @@ VBAコードから自身のVBAプロジェクトを書き換える権限を許�
 2. コード内のどこかをクリックしてカーソルを置く
 3. `F5` キーを押す（または上部メニュー `実行` → `Sub/ユーザーフォームの実行`）
 4. ダイアログで `VBA一括インポート` を選び `実行`
-5. **「成功: 25 件」** と出たら成功 → `OK`
+5. **「成功: 24 件」** と出たら成功 → `OK`
 6. `Ctrl + S` でブックを保存
 
 > ✓ これで全部のVBAコードが入りました。
@@ -165,34 +165,33 @@ GitHubから最新の `vba\` フォルダを取得した後:
 
 トラストセンター設定ができない等で方法Aが使えない場合。
 
-VBEで `ファイル` → `ファイルのインポート` を **以下の順番で25回** 繰り返します。
+VBEで `ファイル` → `ファイルのインポート` を **以下の順番で24回** 繰り返します。
 
 | 順 | ファイル | 役割 |
 |----|---------|------|
 | 1 | ModConfig.bas | 設定読み込み |
 | 2 | ModLog.bas | ログ書き込み |
 | 3 | ModError.bas | エラー処理 |
-| 4 | ModDebug.bas | デバッグ補助 |
-| 5 | ModStep05.bas | 計画生産対象削除 |
-| 6 | ModStep06.bas | 出荷済みデータ削除 |
-| 7 | ModStep07.bas | 型式補完 |
-| 8 | ModStep08.bas | 計画生産行展開 |
-| 9 | ModStep09.bas | 数量チェック |
-| 10 | ModStep10.bas | 並び替え |
-| 11 | ModStep11.bas | メンテ照合 |
-| 12 | ModStep12.bas | 連番付与 |
-| 13 | ModStep13.bas | 集計表作成 |
-| 14 | ModStep14.bas | 出荷完了計画日付追加 |
-| 15 | ModStep15.bas | 出荷台数入力 |
-| 16 | ModStep17.bas | V8マスター更新 |
-| 17 | ModStep18.bas | V9マスター更新 |
-| 18 | ModStep19.bas | 星取表差替 |
-| 19 | ModStep20.bas | グラフ更新 |
-| 20 | ModStep21.bas | KMPユニット必要台数 |
-| 21 | ModStep22.bas | KMPシップメント更新 |
-| 22 | ModStep24.bas | KMP出荷スケジュール更新 |
-| 23 | ModStep25.bas | KMP_MPS更新 |
-| 24 | ModStep26.bas | Forecast差分 |
-| 25 | ModMain.bas | メイン実行 |
+| 4 | ModStep05.bas | 計画生産対象削除 |
+| 5 | ModStep06.bas | 出荷済みデータ削除 |
+| 6 | ModStep07.bas | 型式補完 |
+| 7 | ModStep08.bas | 計画生産行展開 |
+| 8 | ModStep09.bas | 数量チェック |
+| 9 | ModStep10.bas | 並び替え |
+| 10 | ModStep11.bas | メンテ照合 |
+| 11 | ModStep12.bas | 連番付与 |
+| 12 | ModStep13.bas | 集計表作成 |
+| 13 | ModStep14.bas | 出荷完了計画日付追加 |
+| 14 | ModStep15.bas | 出荷台数入力 |
+| 15 | ModStep17.bas | V8マスター更新 |
+| 16 | ModStep18.bas | V9マスター更新 |
+| 17 | ModStep19.bas | 星取表差替 |
+| 18 | ModStep20.bas | グラフ更新 |
+| 19 | ModStep21.bas | KMPユニット必要台数 |
+| 20 | ModStep22.bas | KMPシップメント更新 |
+| 21 | ModStep24.bas | KMP出荷スケジュール更新 |
+| 22 | ModStep25.bas | KMP_MPS更新 |
+| 23 | ModStep26.bas | Forecast差分 |
+| 24 | ModMain.bas | メイン実行 |
 
 その後はステップ5（ボタン作成）→ 毎月の運用 へ進みます。

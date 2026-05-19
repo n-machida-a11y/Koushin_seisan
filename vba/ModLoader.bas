@@ -7,7 +7,7 @@ Option Explicit
 ' 使い方:
 '   1. このブックを開いた状態で Alt+F11 でVBE起動
 '   2. ModLoader を選択し F5 で VBA一括インポート を実行
-'   3. 完了ダイアログで「成功: 25件」を確認
+'   3. 完了ダイアログで「成功: 24件」を確認
 '   4. Ctrl+S でブック保存
 '
 ' 前提:
@@ -34,7 +34,7 @@ Public Sub VBA一括インポート()
     ' インポート順 (基盤 → Step → Main)
     Dim modules As Variant
     modules = Array( _
-        "ModConfig", "ModLog", "ModError", "ModDebug", _
+        "ModConfig", "ModLog", "ModError", _
         "ModStep05", "ModStep06", "ModStep07", "ModStep08", "ModStep09", _
         "ModStep10", "ModStep11", "ModStep12", "ModStep13", "ModStep14", _
         "ModStep15", "ModStep17", "ModStep18", "ModStep19", "ModStep20", _
