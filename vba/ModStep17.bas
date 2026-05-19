@@ -80,13 +80,29 @@ Public Sub Step17_V8マスター更新(targetWs As Worksheet)
         
         ' 既存のT-Noは更新、新規は追加
         Dim writeRow As Long
+        Dim isNewRow As Boolean
         If tNoVal <> "" And existingTNos.Exists(tNoVal) Then
             writeRow = existingTNos(tNoVal)
+            isNewRow = False
         Else
             writeRow = nextRow
             nextRow = nextRow + 1
+            isNewRow = True
         End If
-        
+
+        ' 新規行は先にN列以降の関数を行5からコピー（M列までは下でValue上書き）
+        If isNewRow Then
+            Dim templateRow As Long
+            templateRow = 5  ' 最上データ行をテンプレートとして利用
+            Dim mLastCol As Long
+            mLastCol = masterWs.Cells(templateRow, masterWs.Columns.Count).End(xlToLeft).Column
+            If mLastCol >= 14 Then  ' N列以降が存在する場合のみ
+                masterWs.Range(masterWs.Cells(templateRow, 14), masterWs.Cells(templateRow, mLastCol)).Copy
+                masterWs.Range(masterWs.Cells(writeRow, 14), masterWs.Cells(writeRow, mLastCol)).PasteSpecial Paste:=xlPasteFormulasAndNumberFormats
+                Application.CutCopyMode = False
+            End If
+        End If
+
         ' 列マッピングで転記
         masterWs.Cells(writeRow, 1).Value = targetWs.Cells(i, g_ColTNo).Value      ' A: T-No
         ' B～H: 号機 (AA～AG = col 27～33)

@@ -71,13 +71,29 @@ Public Sub Step18_V9マスター更新(targetWs As Worksheet)
         If CDate(shukkaDate) < g_BaseDate Then GoTo NextRow
         
         Dim writeRow As Long
+        Dim isNewRow As Boolean
         If tNoVal <> "" And existingTNos.Exists(tNoVal) Then
             writeRow = existingTNos(tNoVal)
+            isNewRow = False
         Else
             writeRow = nextRow
             nextRow = nextRow + 1
+            isNewRow = True
         End If
-        
+
+        ' 新規行は先にN列以降の関数を行5からコピー
+        If isNewRow Then
+            Dim templateRow As Long
+            templateRow = 5
+            Dim mLastCol As Long
+            mLastCol = masterWs.Cells(templateRow, masterWs.Columns.Count).End(xlToLeft).Column
+            If mLastCol >= 14 Then
+                masterWs.Range(masterWs.Cells(templateRow, 14), masterWs.Cells(templateRow, mLastCol)).Copy
+                masterWs.Range(masterWs.Cells(writeRow, 14), masterWs.Cells(writeRow, mLastCol)).PasteSpecial Paste:=xlPasteFormulasAndNumberFormats
+                Application.CutCopyMode = False
+            End If
+        End If
+
         ' V9用列マッピング
         masterWs.Cells(writeRow, 1).Value = targetWs.Cells(i, g_ColTNo).Value      ' A: T-No
         ' B～E: 号機 (V9はZ001,Z002,Y001,Y002 = AA～AD = col 27～30)

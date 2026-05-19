@@ -46,6 +46,12 @@ Public Sub Step12_連番付与(targetWs As Worksheet)
     Set v8KPMap = KPNoTNoマップ作成(v8HsWs, g_V8SavedKPNoCol)
     Dim v9KPMap As Object
     Set v9KPMap = KPNoTNoマップ作成(v9HsWs, g_V9SavedKPNoCol)
+
+    ' 生産計画No→T-Noマップ（KP-No空時のフォールバック用）
+    Dim v8SeisanMap As Object
+    Set v8SeisanMap = 生産計画NoTNoマップ作成(v8HsWs, 52)  ' V8星取表 AZ列
+    Dim v9SeisanMap As Object
+    Set v9SeisanMap = 生産計画NoTNoマップ作成(v9HsWs, 27)  ' V9星取表 AA列
     
     ' 変更点の記録
     Dim thisMonthChanges As Long
@@ -69,28 +75,39 @@ Public Sub Step12_連番付与(targetWs As Worksheet)
         
         Dim kpNo As String
         kpNo = Trim(CStr(targetWs.Cells(i, g_ColKPNo).Value))
-        If kpNo = "" Then GoTo NextRow
-        
+        Dim seisanNo As String
+        seisanNo = Trim(CStr(targetWs.Cells(i, g_ColSeisanNo).Value))
+
         ' 既存のT-Noがあるか確認
         Dim existingTNo As String
         Dim kpMap As Object
+        Dim seisanMap As Object
         Dim hsWs As Worksheet
         Dim maxTNo As Long
         
         If model = "V8" Then
             Set kpMap = v8KPMap
+            Set seisanMap = v8SeisanMap
             Set hsWs = v8HsWs
             maxTNo = v8MaxTNo
         Else
             Set kpMap = v9KPMap
+            Set seisanMap = v9SeisanMap
             Set hsWs = v9HsWs
             maxTNo = v9MaxTNo
         End If
         
         existingTNo = ""
-        If Not kpMap Is Nothing Then
+        ' 1. KP-Noで検索
+        If kpNo <> "" And Not kpMap Is Nothing Then
             If kpMap.Exists(kpNo) Then
                 existingTNo = CStr(kpMap(kpNo))
+            End If
+        End If
+        ' 2. KP-Noで見つからない場合は生産計画Noで検索
+        If existingTNo = "" And seisanNo <> "" And Not seisanMap Is Nothing Then
+            If seisanMap.Exists(seisanNo) Then
+                existingTNo = CStr(seisanMap(seisanNo))
             End If
         End If
         
@@ -113,12 +130,12 @@ Public Sub Step12_連番付与(targetWs As Worksheet)
                     ' 今月分の変更
                     targetWs.Rows(i).Interior.Color = RGB(255, 200, 200)  ' 赤ハイライト
                     Call ログ書込("Step12_連番付与", "警告", _
-                        "行" & i & ": 今月分T-No変更検出（" & currentTNo & "→" & existingTNo & "） KP:" & kpNo)
+                        "行" & i & ": 今月分T-No変更検出（" & currentTNo & "→" & existingTNo & "） " & 識別子表示(kpNo, seisanNo))
                     thisMonthChanges = thisMonthChanges + 1
                 Else
                     ' 来月以降の変更
                     Call ログ書込("Step12_連番付与", "情報", _
-                        "行" & i & ": 来月以降T-No変更（" & currentTNo & "→" & existingTNo & "） KP:" & kpNo)
+                        "行" & i & ": 来月以降T-No変更（" & currentTNo & "→" & existingTNo & "） " & 識別子表示(kpNo, seisanNo))
                     nextMonthChanges = nextMonthChanges + 1
                 End If
                 ' 星取表の値で上書き
@@ -243,4 +260,49 @@ Private Function KPNoTNoマップ作成(hsWs As Worksheet, kpCol As Long) As Object
     Next r
     
     Set KPNoTNoマップ作成 = dict
+End Function
+
+' ============================================================
+' 星取表から生産計画No→T-Noのマップを作成
+' V8星取表の生産計画No列 = 52 (AZ列)
+' V9星取表の生産計画No列 = 27 (AA列)
+' ============================================================
+Private Function 生産計画NoTNoマップ作成(hsWs As Worksheet, seisanCol As Long) As Object
+    Dim dict As Object
+    Set dict = CreateObject("Scripting.Dictionary")
+    
+    If hsWs Is Nothing Then
+        Set 生産計画NoTNoマップ作成 = dict
+        Exit Function
+    End If
+    
+    Dim lastRow As Long
+    lastRow = hsWs.Cells(hsWs.Rows.Count, 1).End(xlUp).Row
+    
+    Dim r As Long
+    For r = 7 To lastRow
+        Dim sn As String
+        sn = Trim(CStr(hsWs.Cells(r, seisanCol).Value))
+        Dim tno As String
+        tno = Trim(CStr(hsWs.Cells(r, 1).Value))
+        If sn <> "" And tno <> "" Then
+            If Not dict.Exists(sn) Then
+                dict.Add sn, tno
+            End If
+        End If
+    Next r
+    
+    Set 生産計画NoTNoマップ作成 = dict
+End Function
+
+
+' ============================================================
+' ログ用: KP-No / 生産計画No のどちらで照合したかを示す表示文字列
+' ============================================================
+Private Function 識別子表示(kpNo As String, seisanNo As String) As String
+    If kpNo <> "" Then
+        識別子表示 = "KP:" & kpNo
+    Else
+        識別子表示 = "生産計画No:" & seisanNo
+    End If
 End Function

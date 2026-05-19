@@ -5,7 +5,7 @@ Option Explicit
 ' ステップ⑧: 計画生産行展開（1台1行化）
 '
 ' 対象: F列（機種名）に「計画生産」を含む行 かつ
-'       N列（出荷日）が当月～3ヶ月以内
+'       N列（出荷日）が当月～3ヶ月後の月末まで（4ヶ月分）
 '
 ' 処理: L列（数量）の数だけ行をコピーして展開し、
 '       B列（生産計画No）末尾に -01,-02... と連番を付与する
@@ -14,7 +14,8 @@ Public Sub Step08_計画生産行展開(ws As Worksheet)
     Dim months3Later As Date
     Dim expandedCount As Long
     expandedCount = 0
-    months3Later = DateSerial(Year(g_BaseDate), Month(g_BaseDate) + 3, Day(g_BaseDate))
+    ' 当月～3ヶ月後（4ヶ月分）の月末まで
+    months3Later = DateSerial(Year(g_BaseDate), Month(g_BaseDate) + 4, 1) - 1
 
     ' 下から処理することで行挿入後のインデックスズレを防ぐ
     Dim lastRow As Long
