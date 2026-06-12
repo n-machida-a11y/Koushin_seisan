@@ -7,6 +7,7 @@ Option Explicit
 ' BHPlan日程表から日付ごとのV8/V9出荷台数を集計し、
 ' 出荷・完了計画のE列(順序指示出荷台数)とG列(出荷台数LAZ計)に転記
 ' 合計行(SUM関数)の手前までを対象とする
+' 当月以降で出荷が無くなった日は0クリア(減少更新)。過去の日付は保持
 ' ============================================================
 Public Sub Step15_出荷台数入力(targetWs As Worksheet)
     Dim lastRow As Long
@@ -53,13 +54,13 @@ NextRow:
     
     Dim v8Written As Long
     v8Written = 0
-    If g_V8ProdSchedulePath <> "" And v8Counts.Count > 0 Then
+    If g_V8ProdSchedulePath <> "" Then
         v8Written = 台数書込(g_V8ProdSchedulePath, g_SheetV8ShukkaKeikaku, v8Counts)
     End If
     
     Dim v9Written As Long
     v9Written = 0
-    If g_V9ProdSchedulePath <> "" And v9Counts.Count > 0 Then
+    If g_V9ProdSchedulePath <> "" Then
         v9Written = 台数書込(g_V9ProdSchedulePath, g_SheetV9ShukkaKeikaku, v9Counts)
     End If
     
@@ -133,6 +134,16 @@ Private Function 台数書込(filePath As String, sheetName As String, counts As Obj
             ws.Cells(r, 5).Value = counts(dateKey)
             ws.Cells(r, 7).Value = counts(dateKey)
             writtenCount = writtenCount + 1
+        ElseIf CDate(cellDate) >= g_BaseDate Then
+            ' 当月以降で出荷が無くなった日は0に更新(減少更新の反映)。
+            ' 稼働日(○)は0、非稼働日は空欄(手作業の正解Excelに合わせる)
+            If Trim(CStr(ws.Cells(r, 4).Value)) = "○" Then
+                ws.Cells(r, 5).Value = 0
+                ws.Cells(r, 7).Value = 0
+            Else
+                ws.Cells(r, 5).ClearContents
+                ws.Cells(r, 7).ClearContents
+            End If
         End If
 NextDateRow:
     Next r

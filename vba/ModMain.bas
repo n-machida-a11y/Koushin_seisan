@@ -9,7 +9,7 @@ Public Sub メイン実行()
     Dim ans As VbMsgBoxResult
     ans = MsgBox("生産計画自動化（Phase 1-A）を開始します。" & vbCrLf & vbCrLf & _
                  "【事前確認】" & vbCrLf & _
-                 "・BHプランの出力ファイル（xlsx）を inputフォルダに置いてください" & vbCrLf & _
+                 "・BHプランの出力ファイル（xlsx）を BHプラン保存フォルダに置いてください" & vbCrLf & _
                  "・設定シートのフォルダパスが正しいことを確認してください" & vbCrLf & vbCrLf & _
                  "続行しますか？", vbYesNo + vbQuestion, "生産計画自動化")
     If ans = vbNo Then Exit Sub
@@ -42,10 +42,13 @@ Public Sub メイン実行()
     On Error GoTo ErrHandler
 
     ' ===== Step5～12 =====
+    ' 2026-06ヒアリング指摘【A】: 展開(Step08)を出荷済み削除(Step06)より先に実行。
+    ' V9はKP-Noが無く、星取表には枝番付き生産計画No(-01等)で記録されているため、
+    ' 先に展開して枝番を付与しないと出荷済み行を紐付けて削除できない。
     Call Step05_計画生産対象削除(targetWs)
+    Call Step08_計画生産行展開(targetWs)
     Call Step06_出荷済みデータ削除(targetWs)
     Call Step07_型式補完(targetWs)
-    Call Step08_計画生産行展開(targetWs)
     Call Step09_数量チェック(targetWs)
     Call Step10_並び替え(targetWs)
     Call Step11_メンテ照合(targetWs)
@@ -194,7 +197,7 @@ ErrB2:
 End Sub
 
 ' ============================================================
-' inputフォルダ内の xlsx ファイルを開いて返す
+' BHプラン保存フォルダ内の xlsx ファイルを開いて返す
 ' 複数ある場合は最後に更新されたものを選ぶ
 ' ============================================================
 Private Function 対象ファイルを開く() As Workbook
@@ -231,7 +234,7 @@ Private Function 対象ファイルを開く() As Workbook
     Loop
 
     If latestFile = "" Then
-        MsgBox "inputフォルダにxlsxファイルが見つかりません。" & vbCrLf & _
+        MsgBox "BHプラン保存フォルダにxlsxファイルが見つかりません。" & vbCrLf & _
                "フォルダ: " & folderPath & vbCrLf & vbCrLf & _
                "BHプランの出力ファイルをフォルダに配置してから再実行してください。", _
                vbCritical, "ファイルなし"

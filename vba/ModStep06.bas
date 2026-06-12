@@ -66,9 +66,15 @@ NextRow:
 End Sub
 
 ' ============================================================
-' BH計画保存版（V8/V9）からKP-Noと生産計画Noを読み込んで返す
-' V8: KP-No列はg_V8SavedKPNoCol(13)、生産計画No列は52(AZ列)
-' V9: KP-No列はg_V9SavedKPNoCol(10)、生産計画No列は27(AA列)
+' 出荷済み照合用の識別子(KP-No / 生産計画No)を読み込んで返す
+' 1. BH計画保存版(V8/V9)
+'    V8: KP-No列はg_V8SavedKPNoCol(13)、生産計画No列は52(AZ列)
+'    V9: KP-No列はg_V9SavedKPNoCol(10)、生産計画No列は27(AA列)
+' 2. V9星取表(Production schedule)の生産計画No(AA列=27)
+'    計画生産の出荷済み機は保存版ではなく前回の星取表に
+'    枝番付き生産計画No(例: 000389423-01)で記録されているため、
+'    展開後(Step08)の枝番付きB列との照合にはこちらが必要
+'    (2026-06ヒアリング指摘【A】、4月の正解Excelで確認)
 ' ============================================================
 Private Sub 保存版識別子読み込み(ByRef kpCol As Collection, ByRef seisanCol As Collection)
     Set kpCol = New Collection
@@ -139,6 +145,40 @@ Private Sub 保存版識別子読み込み(ByRef kpCol As Collection, ByRef seisanCol As C
         wb.Close SaveChanges:=False
 NextFile:
     Next idx
+
+    ' --- V9星取表(Production schedule)の生産計画Noを参照に追加 ---
+    If g_V9ProdSchedulePath <> "" Then
+        Dim psExists As Boolean
+        psExists = False
+        On Error Resume Next
+        psExists = (Dir(g_V9ProdSchedulePath) <> "")
+        On Error GoTo 0
+        If psExists Then
+            Dim psWb As Workbook
+            Set psWb = Workbooks.Open(g_V9ProdSchedulePath, ReadOnly:=True)
+            Dim psWs As Worksheet
+            Set psWs = シート検索(psWb, g_SheetV9Hoshitori)
+            If psWs Is Nothing Then
+                Call ログ書込("Step06", "警告", "V9星取表シートが見つかりません: " & g_SheetV9Hoshitori)
+            Else
+                Dim psLast As Long
+                psLast = psWs.Cells(psWs.Rows.Count, 27).End(xlUp).Row  ' AA列 = 生産計画No
+                Dim r2 As Long
+                For r2 = 2 To psLast
+                    Dim sNo As String
+                    sNo = 識別子を正規化(psWs.Cells(r2, 27).Value)
+                    If sNo <> "" Then
+                        On Error Resume Next
+                        seisanCol.Add sNo, sNo
+                        On Error GoTo 0
+                    End If
+                Next r2
+            End If
+            psWb.Close SaveChanges:=False
+        Else
+            Call ログ書込("Step06", "警告", "V9 Production scheduleが見つかりません: " & g_V9ProdSchedulePath)
+        End If
+    End If
 End Sub
 
 ' ============================================================
