@@ -139,6 +139,44 @@ End Sub
 
 
 ' ============================================================
+' ワークブックを安全に保存する
+' 計算が手動(xlCalculationManual)のまま、複合グラフ
+' (barChart+lineChart 等)を含むブックを保存すると Excel が
+' 「指定したディメンションは、このグラフの種類では無効です」
+' エラーを出すため、保存時だけ自動計算に戻して保存する。
+' 万一それでもエラーが出た場合は停止せず警告ログを残して続行する。
+' (2026-06-15 実機テストで Production schedule 保存時に発生)
+' 戻り値: 保存成功=True / 警告あり=False
+' ============================================================
+Public Function 安全保存(wb As Workbook) As Boolean
+    Dim prevCalc As Long
+    prevCalc = Application.Calculation
+
+    On Error Resume Next
+    Application.Calculation = xlCalculationAutomatic
+    Application.DisplayAlerts = False
+    Err.Clear
+    wb.Save
+    Dim n As Long
+    Dim d As String
+    n = Err.Number
+    d = Err.Description
+    Err.Clear
+    Application.Calculation = prevCalc
+    Application.DisplayAlerts = True
+    On Error GoTo 0
+
+    If n <> 0 Then
+        Call ログ書込("安全保存", "警告", _
+            wb.Name & " の保存時に警告(" & d & ")。" & _
+            "グラフ再描画起因の可能性。データは保存を試行済みです")
+        安全保存 = False
+    Else
+        安全保存 = True
+    End If
+End Function
+
+' ============================================================
 ' シート名でシートを取得（完全一致→部分一致のフォールバック）
 ' 末尾スペース等の微妙な違いに対応
 ' ============================================================

@@ -367,7 +367,7 @@ NextBHP:
     mpsWs.Cells(wr, 27).Borders(xlEdgeBottom).LineStyle = xlContinuous
     mpsWs.Cells(wr, 27).Borders(xlEdgeBottom).Weight = xlThin
     
-    psWb.Save
+    Call 安全保存(psWb)
     psWb.Close SaveChanges:=False
     
     Call ログ書込("Step25_KMP_MPS更新", "完了", _

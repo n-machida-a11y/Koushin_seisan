@@ -64,7 +64,7 @@ Public Sub Step24_KMP出荷スケジュール更新(targetWs As Worksheet)
         End If
     Next r
     
-    psWb.Save
+    Call 安全保存(psWb)
     psWb.Close SaveChanges:=False
     Call ログ書込("Step24_KMP出荷スケジュール更新", "完了", writtenCount & "日分のKMP出荷スケジュールを更新しました")
 End Sub

@@ -208,7 +208,7 @@ Private Function “ú•t’Ç‰Áˆ—(filePath As String, sheetName As String, endDate A
             fallbackCount & "“ú‚Í“y“ú‚Ì‚İ‚Å‰Ò“­”»’è‚µ‚Ü‚µ‚½(j“úE‰ïĞ‹x“ú‚ÍèC³‚µ‚Ä‚­‚¾‚³‚¢)")
     End If
 
-    wb.Save
+    Call ˆÀ‘S•Û‘¶(wb)
     wb.Close SaveChanges:=False
 
     “ú•t’Ç‰Áˆ— = addedCount

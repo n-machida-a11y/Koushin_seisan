@@ -70,7 +70,7 @@ NextRow:
 NextKMPRow:
     Next r
     
-    psWb.Save
+    Call 安全保存(psWb)
     psWb.Close SaveChanges:=False
     Call ログ書込("Step22_KMPシップメント更新", "完了", writtenCount & "日分のKMP SHIPMENT PLANを更新しました")
 End Sub

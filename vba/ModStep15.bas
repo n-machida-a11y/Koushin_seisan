@@ -148,7 +148,7 @@ Private Function ‘ä”‘(filePath As String, sheetName As String, counts As Obj
 NextDateRow:
     Next r
     
-    wb.Save
+    Call ˆÀ‘S•Û‘¶(wb)
     wb.Close SaveChanges:=False
     
     ‘ä”‘ = writtenCount

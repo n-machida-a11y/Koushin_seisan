@@ -367,7 +367,7 @@ NextDate:
 
     Call ログ書込("Step13_集計表作成", "情報", "[DBG] 罫線完了 → 集計シート保存開始")
     ' 保存して閉じる
-    psWb.Save
+    Call 安全保存(psWb)
     psWb.Close SaveChanges:=False
 
     Call ログ書込("Step13_集計表作成", "完了", _

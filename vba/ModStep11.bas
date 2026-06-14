@@ -215,11 +215,11 @@ NextRow:
     
     ' ファイルを閉じる
     If Not v8Wb Is Nothing Then
-        v8Wb.Save
+        Call 安全保存(v8Wb)
         v8Wb.Close SaveChanges:=False
     End If
     If Not v9Wb Is Nothing And g_V9ProdSchedulePath <> g_V8ProdSchedulePath Then
-        v9Wb.Save
+        Call 安全保存(v9Wb)
         v9Wb.Close SaveChanges:=False
     End If
     

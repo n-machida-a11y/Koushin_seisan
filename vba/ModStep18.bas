@@ -110,7 +110,7 @@ Public Sub Step18_V9マスター更新(targetWs As Worksheet)
 NextRow:
     Next i
     
-    masterWb.Save
+    Call 安全保存(masterWb)
     masterWb.Close SaveChanges:=False
     
     Call ログ書込("Step18_V9マスター更新", "完了", addedCount & "行をV9星取表日程マスターに転記しました")

@@ -225,7 +225,7 @@ NextDailyRow:
         Next dKey
     End If
     
-    psWb.Save
+    Call 安全保存(psWb)
     psWb.Close SaveChanges:=False
     
     Call ログ書込("Step20_グラフ更新", "完了", writtenCount & "ヶ月分のグラフデータを更新しました")
