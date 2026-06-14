@@ -109,9 +109,13 @@ Public Sub Phase1B1実行()
 
     On Error GoTo ErrB1
 
+    Call ログ書込("Phase1B1実行", "情報", "[DBG] Step13呼出 前")
     Call Step13_集計表作成(targetWs)
+    Call ログ書込("Phase1B1実行", "情報", "[DBG] Step13完了 → Step14呼出 前")
     Call Step14_出荷完了計画日付追加(targetWs)
+    Call ログ書込("Phase1B1実行", "情報", "[DBG] Step14完了 → Step15呼出 前")
     Call Step15_出荷台数入力(targetWs)
+    Call ログ書込("Phase1B1実行", "情報", "[DBG] Step15完了")
 
     On Error GoTo 0
 

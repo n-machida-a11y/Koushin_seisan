@@ -226,6 +226,7 @@ NextRow:
             Next c
         End If
     Next r
+    Call ログ書込("Step13_集計表作成", "情報", "[DBG] クリア完了(" & clearedCells & "セル) → 行追加へ")
 
     ' --- 既存の日付 -> 行マップ ---
     Dim rowMap As Object
@@ -319,6 +320,8 @@ NextDate:
             "上部の年度別ブロック(SUMIFS)の参照範囲は自動拡張されないため確認してください")
     End If
 
+    Call ログ書込("Step13_集計表作成", "情報", "[DBG] 行追加完了(" & addedRows & "行) → 値書込へ")
+
     ' --- 集計値の書き込み(数式セルはスキップ=SUMIFSで自動集計) ---
     Dim writtenCount As Long
     writtenCount = 0
@@ -335,6 +338,8 @@ NextDate:
             writtenCount = writtenCount + 1
         End If
     Next qkVar
+
+    Call ログ書込("Step13_集計表作成", "情報", "[DBG] 値書込完了(" & writtenCount & "セル) → 罫線引き直し開始(" & (lastDataRow - firstDataRow + 1) & "行×" & lastHdrCol & "列)")
 
     ' --- 月区切り線の引き直し(全日付行) ---
     For r = firstDataRow To lastDataRow
@@ -360,6 +365,7 @@ NextDate:
         Next c
     Next r
 
+    Call ログ書込("Step13_集計表作成", "情報", "[DBG] 罫線完了 → 集計シート保存開始")
     ' 保存して閉じる
     psWb.Save
     psWb.Close SaveChanges:=False
