@@ -150,9 +150,20 @@ End Sub
 ' ============================================================
 Public Function 安全保存(wb As Workbook) As Boolean
     Dim prevCalc As Long
+    Dim prevScreen As Boolean
+    Dim prevEvents As Boolean
     prevCalc = Application.Calculation
+    prevScreen = Application.ScreenUpdating
+    prevEvents = Application.EnableEvents
 
     On Error Resume Next
+    ' 手作業で保存するのと同じ通常状態に戻してから保存する。
+    ' ScreenUpdating=False や計算手動のままだと、複合グラフ
+    ' (barChart+lineChart)の再描画で「指定したディメンションは
+    ' このグラフの種類では無効です」エラーが出る。
+    ' (2026-06-15 実機: 手保存はOK / マクロ保存のみNG と切り分け済み)
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
     Application.Calculation = xlCalculationAutomatic
     Application.DisplayAlerts = False
     Err.Clear
@@ -162,7 +173,10 @@ Public Function 安全保存(wb As Workbook) As Boolean
     n = Err.Number
     d = Err.Description
     Err.Clear
+    ' 元の(処理中の)状態に戻す
     Application.Calculation = prevCalc
+    Application.ScreenUpdating = prevScreen
+    Application.EnableEvents = prevEvents
     Application.DisplayAlerts = True
     On Error GoTo 0
 
