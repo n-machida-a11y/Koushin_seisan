@@ -148,7 +148,45 @@ End Sub
 ' (2026-06-15 実機テストで Production schedule 保存時に発生)
 ' 戻り値: 保存成功=True / 警告あり=False
 ' ============================================================
+' ============================================================
+' ブック内の全グラフから、壊れた参照(#REF!)を含む系列を除去する
+' 複合グラフ(barChart+lineChart)に #REF! を含む系列があると、
+' マクロ実行中(画面更新オフ・計算手動)の保存で
+' 「指定したディメンションは、このグラフの種類では無効です」
+' エラーになる。手作業の保存では出ないがマクロ保存のみ発生する。
+' (2026-06-15 実機: グラフ削除でエラー消失と切り分け済み)
+' ============================================================
+Public Sub グラフ壊れ系列除去(wb As Workbook)
+    On Error Resume Next
+    Dim removed As Long
+    removed = 0
+    Dim ws As Worksheet
+    For Each ws In wb.Worksheets
+        Dim co As ChartObject
+        For Each co In ws.ChartObjects
+            Dim si As Long
+            For si = co.Chart.SeriesCollection.Count To 1 Step -1
+                Dim f As String
+                f = ""
+                f = co.Chart.SeriesCollection(si).Formula
+                If InStr(f, "#REF!") > 0 Then
+                    co.Chart.SeriesCollection(si).Delete
+                    removed = removed + 1
+                End If
+            Next si
+        Next co
+    Next ws
+    On Error GoTo 0
+    If removed > 0 Then
+        Call ログ書込("グラフ修復", "情報", _
+            wb.Name & " のグラフから壊れた系列(#REF!)を " & removed & " 本除去しました")
+    End If
+End Sub
+
 Public Function 安全保存(wb As Workbook) As Boolean
+    ' 複合グラフの壊れた参照(#REF!)があると保存時にエラーになるため先に除去
+    Call グラフ壊れ系列除去(wb)
+
     Dim prevCalc As Long
     Dim prevScreen As Boolean
     Dim prevEvents As Boolean
