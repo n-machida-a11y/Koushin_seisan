@@ -184,48 +184,37 @@ Public Sub グラフ壊れ系列除去(wb As Workbook)
 End Sub
 
 Public Function 安全保存(wb As Workbook) As Boolean
-    ' 複合グラフの壊れた参照(#REF!)があると保存時にエラーになるため先に除去
-    Call グラフ壊れ系列除去(wb)
-
-    Dim prevCalc As Long
-    Dim prevScreen As Boolean
-    Dim prevEvents As Boolean
-    prevCalc = Application.Calculation
-    prevScreen = Application.ScreenUpdating
-    prevEvents = Application.EnableEvents
+    ' === 切り分け用: 各段階でErr番号をログに出す ===
+    Dim e1 As Long, e2 As Long, e3 As Long, e4 As Long
+    Dim d3 As String
 
     On Error Resume Next
-    ' 手作業で保存するのと同じ通常状態に戻してから保存する。
-    ' ScreenUpdating=False や計算手動のままだと、複合グラフ
-    ' (barChart+lineChart)の再描画で「指定したディメンションは
-    ' このグラフの種類では無効です」エラーが出る。
-    ' (2026-06-15 実機: 手保存はOK / マクロ保存のみNG と切り分け済み)
-    Application.ScreenUpdating = True
-    Application.EnableEvents = True
+
+    ' (1) グラフの壊れた系列(#REF!)を除去
+    Call グラフ壊れ系列除去(wb)
+    e1 = Err.Number: Err.Clear
+    Call ログ書込("安全保存", "情報", "[DBG] (1)グラフ除去後 Err=" & e1)
+
+    ' (2) 計算を自動に戻す(手作業と同じ状態)
+    Dim prevCalc As Long
+    prevCalc = Application.Calculation
     Application.Calculation = xlCalculationAutomatic
-    Application.DisplayAlerts = False
-    Err.Clear
+    e2 = Err.Number: Err.Clear
+    Call ログ書込("安全保存", "情報", "[DBG] (2)計算Auto化後 Err=" & e2)
+
+    ' (3) 保存本体
     wb.Save
-    Dim n As Long
-    Dim d As String
-    n = Err.Number
-    d = Err.Description
-    Err.Clear
-    ' 元の(処理中の)状態に戻す
+    e3 = Err.Number: d3 = Err.Description: Err.Clear
+    Call ログ書込("安全保存", "情報", "[DBG] (3)wb.Save後 Err=" & e3 & " " & d3)
+
+    ' (4) 計算モードを元に戻す
     Application.Calculation = prevCalc
-    Application.ScreenUpdating = prevScreen
-    Application.EnableEvents = prevEvents
-    Application.DisplayAlerts = True
+    e4 = Err.Number: Err.Clear
+    Call ログ書込("安全保存", "情報", "[DBG] (4)計算戻し後 Err=" & e4)
+
     On Error GoTo 0
 
-    If n <> 0 Then
-        Call ログ書込("安全保存", "警告", _
-            wb.Name & " の保存時に警告(" & d & ")。" & _
-            "グラフ再描画起因の可能性。データは保存を試行済みです")
-        安全保存 = False
-    Else
-        安全保存 = True
-    End If
+    安全保存 = (e3 = 0)
 End Function
 
 ' ============================================================
