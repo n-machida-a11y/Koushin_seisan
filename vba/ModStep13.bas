@@ -366,6 +366,9 @@ NextDate:
     Next r
 
     Call ログ書込("Step13_集計表作成", "情報", "[DBG] 罫線完了 → 集計シート保存開始")
+    ' 完了ログ用にシート名を退避(Close後は閉じたブックを参照できないため)
+    Dim shukeiName As String
+    shukeiName = shukeiWs.Name
     ' 保存して閉じる
     Call 安全保存(psWb)
     Call ログ書込("Step13_集計表作成", "情報", "[DBG] 安全保存完了 → Close開始")
@@ -379,7 +382,7 @@ NextDate:
 
     Call ログ書込("Step13_集計表作成", "完了", _
         writtenCount & "セルを書込（クリア" & clearedCells & "セル、日付行追加" & addedRows & "行、" & _
-        "新規型式列" & newTypeCount & "列、シート: " & shukeiWs.Name & "）")
+        "新規型式列" & newTypeCount & "列、シート: " & shukeiName & "）")
 End Sub
 
 
