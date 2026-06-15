@@ -368,7 +368,14 @@ NextDate:
     Call ログ書込("Step13_集計表作成", "情報", "[DBG] 罫線完了 → 集計シート保存開始")
     ' 保存して閉じる
     Call 安全保存(psWb)
+    Call ログ書込("Step13_集計表作成", "情報", "[DBG] 安全保存完了 → Close開始")
+    On Error Resume Next
     psWb.Close SaveChanges:=False
+    Dim ce As Long: ce = Err.Number
+    Dim cd As String: cd = Err.Description
+    Err.Clear
+    On Error GoTo 0
+    Call ログ書込("Step13_集計表作成", "情報", "[DBG] Close完了 Err=" & ce & " " & cd)
 
     Call ログ書込("Step13_集計表作成", "完了", _
         writtenCount & "セルを書込（クリア" & clearedCells & "セル、日付行追加" & addedRows & "行、" & _
